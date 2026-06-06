@@ -4,25 +4,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARC Raiders — Enemy Combat Guide</title>
+  <title>ARC Raiders — Enemy Field Guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Noto+Sans:wght@400;500;600&display=swap"
     rel="stylesheet" />
-
   <style>
     :root {
-      --bg: #0a0c0f;
-      --surface: #111418;
-      --border: #1e2530;
-      --accent: #e8a020;
-      --accent2: #5bc8f5;
-      --danger: #e84040;
-      --text: #c8d0dc;
-      --muted: #6a7585;
-      --heading: #eef2f8;
-      --tag-bg: #1a2030;
+      --bg: #f5f0e8;
+      --bg2: #ede8de;
+      --surface: #faf7f1;
+      --border: #c8bfa8;
+      --border-dark: #a89880;
+      --ink: #1e1a14;
+      --ink2: #3d3628;
+      --muted: #7a6e5e;
+      --accent: #b84c0a;
+      --accent-bg: #f5ece6;
+      --low: #2a6b3a;
+      --low-bg: #e8f2eb;
+      --med: #7a5c08;
+      --med-bg: #f7f0dc;
+      --high: #8a2c10;
+      --high-bg: #f5e8e3;
+      --boss: #3d1a5c;
+      --boss-bg: #ede5f5;
+      --weak-bg: #fff0e8;
+      --weak: #8a2c10;
+      --weapon-bg: #e8f0f8;
+      --weapon: #143a6b;
+      --item-bg: #e8f5ec;
+      --item: #1a5c2a;
+      --strategy-bg: #fffbf0;
+      --strategy-border: #c8a040;
     }
 
     *,
@@ -39,124 +54,380 @@
 
     body {
       background: var(--bg);
-      color: var(--text);
-      font-family: 'Barlow', sans-serif;
-      font-size: 15px;
-      line-height: 1.65;
+      color: var(--ink);
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
       min-height: 100vh;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px,
-          rgba(0, 0, 0, .07) 2px, rgba(0, 0, 0, .07) 4px);
-    }
-
-    .page-wrap {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 80px;
-    }
-
     /* ── HEADER ── */
-    header {
-      position: relative;
-      padding: 60px 0 48px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 36px;
-      overflow: hidden;
+    .site-header {
+      background: var(--ink);
+      color: #f5f0e8;
+      padding: 20px 16px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--accent);
     }
 
-    header::after {
-      content: 'ARC';
-      position: absolute;
-      right: -20px;
-      top: -10px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 200px;
-      color: rgba(232, 160, 32, .04);
+    .header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .site-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       line-height: 1;
-      pointer-events: none;
+      color: #f5f0e8;
+    }
+
+    .site-title span {
+      color: #e8883a;
+    }
+
+    .patch-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: #e8883a;
+      color: #1e1a14;
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* ── TIER FILTER NAV ── */
+    .tier-nav {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      position: sticky;
+      top: 71px;
+      z-index: 90;
+    }
+
+    .tier-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tier-btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 5px 12px;
+      border: 1.5px solid var(--border-dark);
+      background: var(--surface);
+      color: var(--ink2);
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .tier-btn:active {
+      opacity: 0.7;
+    }
+
+    .tier-btn.all {
+      background: var(--ink);
+      color: #f5f0e8;
+      border-color: var(--ink);
+    }
+
+    .tier-btn.low {
+      background: var(--low-bg);
+      color: var(--low);
+      border-color: var(--low);
+    }
+
+    .tier-btn.medium {
+      background: var(--med-bg);
+      color: var(--med);
+      border-color: var(--med);
+    }
+
+    .tier-btn.high {
+      background: var(--high-bg);
+      color: var(--high);
+      border-color: var(--high);
+    }
+
+    .tier-btn.boss {
+      background: var(--boss-bg);
+      color: var(--boss);
+      border-color: var(--boss);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 0 0 60px;
+    }
+
+    /* ── TIER GROUP ── */
+    .tier-group {
+      margin-bottom: 4px;
+    }
+
+    .tier-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px 10px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 111px;
+      z-index: 80;
+    }
+
+    .tier-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1.5px solid;
+    }
+
+    .tier-label.low {
+      color: var(--low);
+      border-color: var(--low);
+      background: var(--low-bg);
+    }
+
+    .tier-label.medium {
+      color: var(--med);
+      border-color: var(--med);
+      background: var(--med-bg);
+    }
+
+    .tier-label.high {
+      color: var(--high);
+      border-color: var(--high);
+      background: var(--high-bg);
+    }
+
+    .tier-label.boss {
+      color: var(--boss);
+      border-color: var(--boss);
+      background: var(--boss-bg);
+    }
+
+    .tier-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--ink2);
+    }
+
+    /* ── ENEMY CARD ── */
+    .enemy-card {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    /* summary = tap target */
+    .enemy-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      list-style: none;
+      gap: 10px;
+      -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
-    .header-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 12px;
+    .enemy-summary::-webkit-details-marker {
+      display: none;
     }
 
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 8vw, 96px);
-      color: var(--heading);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-    }
-
-    h1 span {
-      color: var(--accent);
-    }
-
-    .header-sub {
-      margin-top: 16px;
-      max-width: 600px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* ── VERSION BANNER ── */
-    .version-banner {
-      background: rgba(232, 160, 32, .08);
-      border: 1px solid rgba(232, 160, 32, .3);
-      border-left: 3px solid var(--accent);
-      padding: 14px 20px;
-      margin-bottom: 36px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    .version-banner strong {
-      color: var(--accent);
-    }
-
-    .version-banner .warn {
-      color: #e8c060;
-    }
-
-    /* ── ALERT STATES ── */
-    .legend {
+    .summary-left {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 40px;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
     }
 
-    .legend-item {
+    .enemy-name-row {
+      min-width: 0;
+    }
+
+    .enemy-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      line-height: 1.1;
+      display: block;
+    }
+
+    .enemy-hp {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 1px;
+    }
+
+    .patch-chip {
+      font-size: 10px;
+      font-weight: 600;
+      color: #7a5808;
+      background: #f5ead0;
+      border: 1px solid #c8a040;
+      padding: 2px 6px;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+      display: inline-block;
+      margin-top: 3px;
+    }
+
+    .summary-right {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      font-size: 12px;
-      font-family: 'Share Tech Mono', monospace;
-      letter-spacing: 0.05em;
+      flex-shrink: 0;
     }
 
-    .dot {
+    .weak-preview {
+      font-size: 12px;
+      color: var(--weak);
+      background: var(--weak-bg);
+      border: 1px solid #e8c0a0;
+      padding: 3px 8px;
+      font-weight: 600;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chevron {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+
+    details[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ── CARD BODY ── */
+    .card-body {
+      padding: 0 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .body-text {
+      font-size: 15px;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    /* ── TAGS ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 10px;
+      line-height: 1.3;
+    }
+
+    .tag.weak {
+      background: var(--weak-bg);
+      color: var(--weak);
+      border: 1px solid #e8b090;
+    }
+
+    .tag.weapon {
+      background: var(--weapon-bg);
+      color: var(--weapon);
+      border: 1px solid #a0b8d8;
+    }
+
+    .tag.item {
+      background: var(--item-bg);
+      color: var(--item);
+      border: 1px solid #90c8a0;
+    }
+
+    /* ── STRATEGY ── */
+    .strategy-block {
+      background: var(--strategy-bg);
+      border-left: 3px solid var(--strategy-border);
+      padding: 12px 14px;
+      font-size: 15px;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    .strategy-block strong {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ── ALERT STATES (inline in card) ── */
+    .alert-states {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .alert-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--ink2);
+    }
+
+    .alert-dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -164,62 +435,41 @@
     }
 
     .dot-blue {
-      background: #5bc8f5;
-      box-shadow: 0 0 6px #5bc8f5;
+      background: #2060b0;
     }
 
     .dot-yellow {
-      background: #e8c020;
-      box-shadow: 0 0 6px #e8c020;
+      background: #b08000;
     }
 
     .dot-red {
-      background: #e84040;
-      box-shadow: 0 0 6px #e84040;
+      background: #b02020;
     }
 
-    /* ── SECTION LABELS ── */
-    .section-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── AMMO TABLE ── */
+    /* ── AMMO TABLE (inline in card) ── */
     .ammo-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 13px;
-      margin-bottom: 48px;
     }
 
     .ammo-table th {
-      font-family: 'Share Tech Mono', monospace;
+      font-family: 'Rajdhani', sans-serif;
       font-size: 10px;
-      letter-spacing: 0.15em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
       text-align: left;
-      padding: 8px 12px;
+      padding: 4px 8px;
       border-bottom: 1px solid var(--border);
+      background: var(--bg2);
     }
 
     .ammo-table td {
-      padding: 8px 12px;
-      border-bottom: 1px solid rgba(30, 37, 48, .6);
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--bg2);
+      vertical-align: top;
     }
 
     .ammo-table tr:last-child td {
@@ -227,789 +477,583 @@
     }
 
     .eff-low {
-      color: #e86060;
+      color: #8a2c10;
+      font-weight: 600;
     }
 
     .eff-mid {
-      color: var(--accent);
+      color: #7a5c08;
+      font-weight: 600;
     }
 
     .eff-high {
-      color: #6adf8a;
-    }
-
-    /* ── TOC ── */
-    .toc {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 24px;
-      margin-bottom: 48px;
-    }
-
-    .toc-title {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .toc-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      list-style: none;
-    }
-
-    .toc-list a {
-      font-size: 13px;
-      color: var(--muted);
-      text-decoration: none;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      padding: 4px 12px;
-      transition: color .15s, border-color .15s;
-    }
-
-    .toc-list a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    /* ── TIER HEADERS ── */
-    .tier-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-      margin-top: 60px;
-    }
-
-    .tier-badge {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.12em;
-      padding: 4px 12px;
-      border: 1px solid;
-    }
-
-    .tier-low {
-      color: #7ab8e8;
-      border-color: #7ab8e8;
-    }
-
-    .tier-medium {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .tier-high {
-      color: #e86030;
-      border-color: #e86030;
-    }
-
-    .tier-boss {
-      color: var(--danger);
-      border-color: var(--danger);
-    }
-
-    .tier-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      color: var(--heading);
-      letter-spacing: 0.05em;
-    }
-
-    /* ── ENEMY CARDS ── */
-    .enemy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
-      gap: 2px;
-    }
-
-    .enemy-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-
-    .enemy-card:hover {
-      border-color: var(--accent);
-    }
-
-    .enemy-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-    }
-
-    .enemy-card.tier-low-card::before {
-      background: #7ab8e8;
-    }
-
-    .enemy-card.tier-medium-card::before {
-      background: var(--accent);
-    }
-
-    .enemy-card.tier-high-card::before {
-      background: #e86030;
-    }
-
-    .enemy-card.tier-boss-card::before {
-      background: var(--danger);
-    }
-
-    .card-header {
-      padding: 20px 24px 16px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .enemy-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 30px;
-      letter-spacing: 0.04em;
-      color: var(--heading);
-      line-height: 1;
-    }
-
-    .enemy-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
-    }
-
-    .hp-badge {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    .hp-badge span {
-      color: var(--text);
-    }
-
-    /* patch note badge on a card */
-    .patch-note {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: #e8c060;
-      background: rgba(232, 192, 96, .1);
-      border: 1px solid rgba(232, 192, 96, .3);
-      padding: 2px 8px;
-      margin-top: 4px;
-    }
-
-    .card-body {
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .block-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .block-text {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
-      color: var(--text);
-      letter-spacing: 0.04em;
-    }
-
-    .tag.weak {
-      border-color: #e86030;
-      color: #e89060;
-    }
-
-    .tag.weapon {
-      border-color: #5bc8f5;
-      color: #8dd8f8;
-    }
-
-    .tag.item {
-      border-color: #a070e8;
-      color: #c090f8;
-    }
-
-    .strategy-block {
-      background: rgba(232, 160, 32, .06);
-      border-left: 3px solid var(--accent);
-      padding: 12px 16px;
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.65;
+      color: #2a6b3a;
+      font-weight: 600;
     }
 
     /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 0 0;
-      margin-top: 80px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 12px;
       color: var(--muted);
-      letter-spacing: 0.08em;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
     }
 
-    @media (max-width: 600px) {
-      .enemy-grid {
-        grid-template-columns: 1fr;
-      }
+    /* ── VERSION NOTE ── */
+    .version-bar {
+      background: #fffbf0;
+      border-bottom: 1px solid #c8a040;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.5;
+    }
 
-      h1 {
-        font-size: 56px;
-      }
+    .version-bar strong {
+      color: var(--accent);
     }
   </style>
 </head>
 
 <body>
-  <div class="page-wrap">
 
-    <!-- HEADER -->
-    <header>
-      <div class="header-tag">// Combat Intelligence Dossier</div>
-      <h1>ARC<br /><span>Enemy</span><br />Field Guide</h1>
-      <p class="header-sub">Threat profiles, weak points, and engagement
-        tactics for every ARC machine encountered on Solace. Study before you
-        drop.</p>
-    </header>
-
-    <!-- VERSION BANNER -->
-    <div class="version-banner">
-      <strong>// Guide Version: Patch 1.29.0 — May 19, 2026</strong><br />
-      This guide reflects the current live game state as of the Nomadic Envoy
-      update (1.29.0). Major enemy changes introduced in <strong>Riven Tides
-        (1.26.0)</strong> and <strong>Flashpoint (1.22.0)</strong> are
-      incorporated throughout. Entries with a <span class="warn">⚠ PATCH
-        NOTE</span> badge were specifically updated in a recent
-      patch.<br /><br />
-      <span class="warn">⚠ Note:</span> Embark Studios patches frequently.
-      Individual cards note their last-relevant patch where applicable. Always
-      check <strong>arcraiders.com/news</strong> after major updates.
+  <header class="site-header">
+    <div class="header-top">
+      <div class="site-title">ARC <span>Enemy</span> Guide</div>
+      <div class="patch-badge">Patch 1.29.0</div>
     </div>
+  </header>
 
-    <!-- ALERT STATES -->
-    <div class="section-label">Optical Alert States</div>
-    <div class="legend">
-      <div class="legend-item">
-        <div class="dot dot-blue"></div> BLUE — Patrol / Neutral. Avoid or
-        observe.
+  <nav class="tier-nav" aria-label="Jump to tier">
+    <a class="tier-btn all" href="#small">All</a>
+    <a class="tier-btn low" href="#small">Low</a>
+    <a class="tier-btn medium" href="#medium">Medium</a>
+    <a class="tier-btn high" href="#large">Critical</a>
+    <a class="tier-btn boss" href="#bosses">Boss</a>
+  </nav>
+
+  <div class="version-bar">
+    <strong>v1.29.0 — May 19, 2026.</strong> Nomadic Envoy update. Entries
+    marked ⚠ changed in a recent patch. Check
+    <strong>arcraiders.com/news</strong> after major updates.
+  </div>
+
+  <main class="main">
+
+    <!-- ════════════════════════════════
+       LOW THREAT
+  ════════════════════════════════ -->
+    <section class="tier-group" id="small">
+      <div class="tier-heading">
+        <span class="tier-label low">Low</span>
+        <span class="tier-title">Small Threats</span>
       </div>
-      <div class="legend-item">
-        <div class="dot dot-yellow"></div> YELLOW — Alerted. Freeze, hold
-        position.
-      </div>
-      <div class="legend-item">
-        <div class="dot dot-red"></div> RED — Aggressive. Eliminate or
-        disengage immediately.
-      </div>
-    </div>
-
-    <!-- AMMO TABLE -->
-    <div class="section-label">Ammo Effectiveness vs ARC Armor</div>
-    <table class="ammo-table">
-      <thead>
-        <tr>
-          <th>Ammo Type</th>
-          <th>vs ARC Armor</th>
-          <th>vs Players</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Light</td>
-          <td class="eff-low">Low</td>
-          <td class="eff-high">High</td>
-          <td>Best for Ticks &amp; Pops. Weak against armored units.</td>
-        </tr>
-        <tr>
-          <td>Medium</td>
-          <td class="eff-mid">Moderate</td>
-          <td class="eff-mid">Moderate</td>
-          <td>Reliable all-rounder. Safe default choice.</td>
-        </tr>
-        <tr>
-          <td>Heavy</td>
-          <td class="eff-high">High</td>
-          <td class="eff-high">High</td>
-          <td>Premier choice for all armored ARC. Stack size increased to 60
-            in 1.26.0.</td>
-        </tr>
-        <tr>
-          <td>Shotgun</td>
-          <td class="eff-mid">Situational</td>
-          <td class="eff-high">High (close)</td>
-          <td>Excellent vs Shredder, Fireball, and close-range engagements.
-          </td>
-        </tr>
-        <tr>
-          <td>Launcher</td>
-          <td class="eff-high">Very High</td>
-          <td class="eff-high">Very High</td>
-          <td>Heavy ARC and bosses. Loud — draws attention. Rascal launcher
-            added in 1.29.0.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- TOC -->
-    <div class="toc">
-      <div class="toc-title">// Jump to Enemy</div>
-      <ul class="toc-list">
-        <li><a href="#tick">Tick</a></li>
-        <li><a href="#pop">Pop</a></li>
-        <li><a href="#fireball">Fireball</a></li>
-        <li><a href="#turret">Turret</a></li>
-        <li><a href="#snitch">Snitch / Spotter</a></li>
-        <li><a href="#wasp">Wasp</a></li>
-        <li><a href="#hornet">Hornet</a></li>
-        <li><a href="#shredder">Shredder</a></li>
-        <li><a href="#firefly">Firefly</a></li>
-        <li><a href="#comet">Comet</a></li>
-        <li><a href="#surveyor">Surveyor</a></li>
-        <li><a href="#rollbot">Rollbot</a></li>
-        <li><a href="#sentinel">Sentinel</a></li>
-        <li><a href="#bombardier">Bombardier</a></li>
-        <li><a href="#bastion">Bastion</a></li>
-        <li><a href="#leaper">Leaper</a></li>
-        <li><a href="#rocketeer">Rocketeer</a></li>
-        <li><a href="#vaporizer">Vaporizer</a></li>
-        <li><a href="#queen">Queen</a></li>
-        <li><a href="#matriarch">Matriarch</a></li>
-        <li><a href="#turbine">ARC Turbine</a></li>
-      </ul>
-    </div>
-
-    <!-- ═══════════════════════════════════
-       SMALL THREATS
-  ════════════════════════════════════ -->
-    <div class="tier-header" id="small">
-      <div class="tier-badge tier-low">Threat: Low</div>
-      <div class="tier-name">Small Threats</div>
-    </div>
-
-    <div class="enemy-grid">
 
       <!-- TICK -->
-      <div class="enemy-card tier-low-card" id="tick">
-        <div class="card-header">
-          <div class="enemy-name">Tick</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~10–50</span></div>
+      <details class="enemy-card" id="tick">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Tick</span>
+              <span class="enemy-hp">HP ~10–50</span>
+              <span class="patch-chip">⚠ 1.29.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Body (fragile)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Lurks motionless on walls, ceilings, and
-              in dark corners indoors. When a raider passes close it leaps
-              directly at the head, latches on, and deals continuous damage
-              before detonating. Frequently found in clusters. As of 1.29.0,
-              players can drop a carryable item to break the latch and shake
-              one off.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Lurks motionless on walls, ceilings, and dark
+              corners indoors. Leaps at your head when you pass close, latches
+              on, and deals continuous damage before detonating. Found in
+              clusters. As of 1.29.0, dropping a carryable item breaks the
+              latch.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
-            <div class="tags"><span class="tag weak">Entire body (extremely
-                fragile)</span></div>
-          </div>
-          <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
-              <span class="tag weapon">Raider Tool (silent 1-hit melee)</span>
+              <span class="tag weak">Entire body (extremely fragile)</span>
+            </div>
+          </div>
+          <div>
+            <div class="section-label">Weapons &amp; Items</div>
+            <div class="tags">
+              <span class="tag weapon">Raider Tool — silent 1-hit kill</span>
               <span class="tag weapon">Any pistol / light ammo</span>
               <span class="tag item">Flashlight (spot before it leaps)</span>
-              <span class="tag item">Carryable item (drop to break latch —
-                patch 1.29.0)</span>
+              <span class="tag item">Carryable item (drop to break
+                latch)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> A single melee hit is an instant,
-            silent kill — the Raider Tool is ideal. Scan ceilings and corners
-            with your flashlight before entering any building. Kill them
-            before they leap; if one latches on, dropping a carryable item now
-            breaks the hold (added in 1.29.0). Never fire a gun at one indoors
-            if stealth matters — it alerts everything nearby.
+            <strong>Strategy</strong>
+            One melee hit kills it silently — use the Raider Tool. Scan
+            ceilings and corners with your flashlight before entering any
+            building. Kill before it leaps; if one latches on, drop a
+            carryable to break the hold. Never fire a gun at one indoors if
+            stealth matters — it alerts everything nearby.
+          </div>
+          <div>
+            <div class="section-label">Alert States</div>
+            <div class="alert-states">
+              <div class="alert-row"><span class="alert-dot dot-blue"></span>
+                Blue — Patrolling / neutral</div>
+              <div class="alert-row"><span
+                  class="alert-dot dot-yellow"></span> Yellow — Alerted,
+                cautious</div>
+              <div class="alert-row"><span class="alert-dot dot-red"></span>
+                Red — Aggressive, attacking</div>
+            </div>
+          </div>
+          <div>
+            <div class="section-label">Ammo vs ARC Armor</div>
+            <table class="ammo-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>vs ARC</th>
+                  <th>vs Players</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Light</td>
+                  <td class="eff-low">Low</td>
+                  <td class="eff-high">High</td>
+                </tr>
+                <tr>
+                  <td>Medium</td>
+                  <td class="eff-mid">Moderate</td>
+                  <td class="eff-mid">Moderate</td>
+                </tr>
+                <tr>
+                  <td>Heavy</td>
+                  <td class="eff-high">High</td>
+                  <td class="eff-high">High</td>
+                </tr>
+                <tr>
+                  <td>Shotgun</td>
+                  <td class="eff-mid">Situational</td>
+                  <td class="eff-high">High (close)</td>
+                </tr>
+                <tr>
+                  <td>Launcher</td>
+                  <td class="eff-high">Very High</td>
+                  <td class="eff-high">Very High</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- POP -->
-      <div class="enemy-card tier-low-card" id="pop">
-        <div class="card-header">
-          <div class="enemy-name">Pop</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~20–40</span></div>
+      <details class="enemy-card" id="pop">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Pop</span>
+              <span class="enemy-hp">HP ~20–40</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Body (unarmored)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Small suicide drone. Rolls rapidly toward
-              a target emitting an accelerating high-pitched beep. Detonates
-              on contact — but if you destroy it before it completes its
-              self-detonation sequence, the blast is harmless. The full
-              self-detonation is the dangerous version.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Small suicide drone. Rolls rapidly toward you
+              emitting an accelerating beep. Detonates on contact. If you
+              destroy it before it completes its self-detonation sequence, the
+              blast is harmless.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Entire body
                 (unarmored)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Raider Tool (melee — 1 hit kill)</span>
+              <span class="tag weapon">Raider Tool — 1 hit, stops
+                detonation</span>
               <span class="tag weapon">Any firearm</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> The moment you hear the beep, intercept
-            it — one melee strike destroys it safely before it can arm. Do not
-            let it reach you. In groups, they often roll in quick succession;
-            prioritize by sound. Keep moving so multiple Pops can't converge
-            simultaneously.
+            <strong>Strategy</strong>
+            The moment you hear the beep, intercept it — one melee strike
+            destroys it safely before it can arm. Keep moving so multiple Pops
+            can't converge simultaneously.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- FIREBALL -->
-      <div class="enemy-card tier-low-card" id="fireball">
-        <div class="card-header">
-          <div class="enemy-name">Fireball</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~20–100</span></div>
+      <details class="enemy-card" id="fireball">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Fireball</span>
+              <span class="enemy-hp">HP ~20–100</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Core (fire only)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Armored rolling bot. Closes distance,
-              pauses, then opens its front chassis panels and blasts a cone of
-              fire. Front armor is normally closed and highly resistant — the
-              vulnerable core is only exposed during the fire attack. Explodes
-              violently on death — maintain distance.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Armored rolling bot. Closes distance, pauses,
+              opens its front chassis panels and blasts a cone of fire.
+              Vulnerable core only exposed during the fire attack. Explodes
+              violently on death — maintain distance.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Exposed core (during fire
                 attack only)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Medium/Heavy ammo rifle</span>
               <span class="tag weapon">Shotgun (burst at core during
                 opening)</span>
-              <span class="tag item">Keep 5m+ distance — death explosion is
+              <span class="tag item">Stay 5m+ away — death explosion is
                 wide</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Bait its fire attack from a safe
-            distance, then punish the exposed core as it opens. Sidestep its
-            flame arc — it can't track well mid-attack. Back off immediately
-            after firing; the death explosion has a large radius. Never melee
-            this enemy.
+            <strong>Strategy</strong>
+            Bait its fire attack from a safe distance, then punish the exposed
+            core as it opens. Sidestep the flame arc — it can't track
+            mid-attack. Back off immediately after firing. Never melee this
+            enemy.
           </div>
         </div>
+      </details>
+
+    </section>
+
+    <!-- ════════════════════════════════
+       MEDIUM THREAT
+  ════════════════════════════════ -->
+    <section class="tier-group" id="medium">
+      <div class="tier-heading">
+        <span class="tier-label medium">Medium</span>
+        <span class="tier-title">Medium Threats</span>
       </div>
 
-    </div><!-- /small grid -->
-
-    <!-- ═══════════════════════════════════
-       MEDIUM THREATS
-  ════════════════════════════════════ -->
-    <div class="tier-header" id="medium">
-      <div class="tier-badge tier-medium">Threat: Medium</div>
-      <div class="tier-name">Medium Threats</div>
-    </div>
-
-    <div class="enemy-grid">
-
       <!-- TURRET -->
-      <div class="enemy-card tier-medium-card" id="turret">
-        <div class="card-header">
-          <div class="enemy-name">Turret</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~80–200</span></div>
+      <details class="enemy-card" id="turret">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Turret</span>
+              <span class="enemy-hp">HP ~80–200</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Barrel / Base</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Stationary indoor gun emplacement. Scans
-              with a blue laser. Switches to red on detection and immediately
-              opens rapid fire. High rate of fire will deplete shields quickly
-              at close range. Placement at chokepoints and corridors amplifies
-              the threat. As of 1.26.0, additional Sentinel spawn points were
-              added — watch elevated positions near turret clusters.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Stationary indoor gun emplacement. Scans with
+              a blue laser; switches to red on detection and opens rapid fire.
+              High rate of fire depletes shields quickly. Deadly at
+              chokepoints and corridors. More Sentinel spawn points added near
+              turret clusters in 1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Barrel / sensor head</span>
               <span class="tag weak">Base (melee blind spot)</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Raider Tool (silent melee from
-                below)</span>
+              <span class="tag weapon">Raider Tool — silent melee from
+                below</span>
               <span class="tag weapon">Any firearm from cover</span>
               <span class="tag item">Smoke Grenade (break line of
                 sight)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> A single melee strike to the base is
-            completely silent. From range, use cover and peek-shoot its
-            sensor. Smoke grenades buy time to close for a melee finish. Never
-            rush through a doorway without scanning for the blue laser first.
+            <strong>Strategy</strong>
+            Single melee strike to the base is completely silent and instant.
+            From range, use cover and peek-shoot the sensor. Smoke buys time
+            to close for a melee finish. Never rush through a doorway without
+            scanning for the blue laser first.
           </div>
         </div>
-      </div>
+      </details>
 
-      <!-- SNITCH / SPOTTER -->
-      <div class="enemy-card tier-medium-card" id="snitch">
-        <div class="card-header">
-          <div class="enemy-name">Snitch / Spotter</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~80–158</span></div>
+      <!-- SNITCH -->
+      <details class="enemy-card" id="snitch">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Snitch / Spotter</span>
+              <span class="enemy-hp">HP ~80–158</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Thrusters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Scout drone that flies at altitude
-              scanning for players. Deals zero direct damage — its entire
-              threat is detecting you and broadcasting your position to every
-              ARC in the area, triggering a swarm response. Will flee when
-              threatened. The Bombardier spawns Spotters that respawn every
-              20–30s while the Bombardier is alive.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Scout drone at altitude. Deals zero direct
+              damage — its threat is broadcasting your position to every ARC
+              nearby, triggering a swarm. Flees when threatened. Bombardiers
+              spawn Spotters that respawn every 20–30s while it lives.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Thrusters</span>
               <span class="tag weak">Scanner sensor (body shots)</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Semi-auto rifle (precise, quiet)</span>
               <span class="tag weapon">Suppressed weapon preferred</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Kill on sight — always. A Snitch that
-            escapes turns every nearby ARC hostile. Prioritize it over
-            everything else in a mixed group. If it has already scanned you,
-            break line of sight with buildings immediately and expect a swarm.
+            <strong>Strategy</strong>
+            Kill on sight — always. A Snitch that escapes turns every nearby
+            ARC hostile. Prioritize it over everything else in a mixed group.
+            If it already scanned you, break line of sight with buildings
+            immediately and brace for a swarm.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- WASP -->
-      <div class="enemy-card tier-medium-card" id="wasp">
-        <div class="card-header">
-          <div class="enemy-name">Wasp</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~80–110</span></div>
+      <details class="enemy-card" id="wasp">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Wasp</span>
+              <span class="enemy-hp">HP ~80–110</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Thrusters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">The most common ARC. Basic flying drone
-              with a rapid-fire gun that deals steady chip damage. Moves in
-              arcing patterns to make itself harder to hit. Usually in groups.
-              Individually weak but dangerous alongside heavier enemies that
-              demand your attention.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Most common ARC. Basic flying drone with a
+              rapid-fire gun dealing steady chip damage. Moves in arcing
+              patterns. Usually in groups. Individually weak but dangerous
+              when you're occupied with heavier enemies.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Thrusters
                 (underside)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">SMG / Light ammo</span>
               <span class="tag weapon">Semi-auto pistol</span>
-              <span class="tag item">Frag Grenade (pack hunting)</span>
+              <span class="tag item">Frag Grenade (hits cluster)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Low HP — burst fire to the body is
-            enough at close range. Target the thrusters for fastest kills.
-            When multiple Wasps are present, use a grenade to hit the cluster.
-            Don't ignore them while fighting larger enemies; their combined
-            chip damage drains you faster than you expect.
+            <strong>Strategy</strong>
+            Low HP — burst fire to the body is enough. Target thrusters for
+            fastest kills. Grenade the cluster when multiple are present.
+            Don't ignore them during big fights; their chip damage adds up
+            fast.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- HORNET -->
-      <div class="enemy-card tier-medium-card" id="hornet">
-        <div class="card-header">
-          <div class="enemy-name">Hornet</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~200–300</span></div>
+      <details class="enemy-card" id="hornet">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Hornet</span>
+              <span class="enemy-hp">HP ~200–300</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Rear thrusters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Lightly armored flying drone. Closes
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Lightly armored flying drone. Closes
               aggressively and delivers electric stun rounds that briefly
               stagger you. Being stunned in a multi-enemy fight is usually
-              fatal. More durable and faster than a Wasp.</div>
+              fatal.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Rear thrusters</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Medium ammo AR / rifle</span>
               <span class="tag weapon">Shotgun (close range)</span>
-              <span class="tag item">EMP Grenade (disables stun
-                ability)</span>
+              <span class="tag item">EMP Grenade (disables stun)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Prioritize Hornets over Wasps in mixed
-            groups — their stun is the greater threat. Target rear thrusters
-            for a damage multiplier. EMP grenades temporarily disable their
-            electric attack. Stay mobile; a stationary target is much easier
-            to stun.
+            <strong>Strategy</strong>
+            Prioritize Hornets over Wasps in mixed groups — the stun is the
+            bigger threat. Target rear thrusters for a damage multiplier. EMP
+            grenades temporarily disable their electric attack. Stay mobile.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- SHREDDER -->
-      <div class="enemy-card tier-medium-card" id="shredder">
-        <div class="card-header">
-          <div class="enemy-name">Shredder</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~480–600</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.22.0</div>
+      <details class="enemy-card" id="shredder">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Shredder</span>
+              <span class="enemy-hp">HP ~480–600</span>
+              <span class="patch-chip">⚠ 1.22.0 — All maps</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Thrusters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Bulky aerial platform. Originally confined
-              to Stella Montis, Shredders were expanded to all maps in the
-              Flashpoint update (1.22.0). On Dam Battlegrounds they only
-              appear during certain map conditions. Charges up a massive
-              shrapnel blast that covers a wide arc — the charge-up is
-              telegraphed with a brief hover and spinning front weapons.
-              During the blast it's focused on firing and can't track
-              fast-moving targets well.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Bulky aerial platform. Originally Stella
+              Montis only — expanded to all maps in Flashpoint (1.22.0). On
+              Dam Battlegrounds only appears during certain map conditions.
+              Charges up a massive shrapnel blast telegraphed by a brief hover
+              and spinning front weapons. During the blast it can't track
+              fast-moving targets well. Known bug (1.29.0): floats to ceiling
+              in some Hidden Bunker rooms.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Thrusters (underside /
                 rear — blue units)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Shotgun (close burst at
-                thrusters)</span>
+              <span class="tag weapon">Shotgun (burst at thrusters)</span>
               <span class="tag weapon">Heavy ammo rifle</span>
-              <span class="tag weapon">Canto SMG (added 1.22.0 — natural
-                counter per Embark)</span>
+              <span class="tag weapon">Canto SMG (natural counter per
+                Embark)</span>
               <span class="tag item">Frag / EMP Grenade</span>
-              <span class="tag item">Hard cover (walls, rock
-                formations)</span>
+              <span class="tag item">Hard cover — walls, rock
+                formations</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Wait for the charge-up animation, then
-            immediately get behind hard cover. Let it complete its shrapnel
-            blast, then step out and unload into the thrusters. Repeat: cover
-            during attack, fire during cooldown. Hitting the thrusters
-            staggers the unit and opens follow-up damage windows. Do not fight
-            in the open — its shrapnel spread is lethal at range. Note: as of
-            1.29.0, Shredders are reported to float to the ceiling in some
-            rooms of the Hidden Bunker (known bug).
+            <strong>Strategy</strong>
+            Wait for the charge-up, get behind hard cover, let it complete the
+            shrapnel blast. Step out and unload into the thrusters. Repeat —
+            cover during attack, fire during cooldown. Hitting the thrusters
+            staggers it and opens follow-up windows. Do not fight in the open.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- FIREFLY -->
-      <div class="enemy-card tier-medium-card" id="firefly">
-        <div class="card-header">
-          <div class="enemy-name">Firefly</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~200</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.29.0</div>
+      <details class="enemy-card" id="firefly">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Firefly</span>
+              <span class="enemy-hp">HP ~200</span>
+              <span class="patch-chip">⚠ Fire fix 1.29.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Fuel tank</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Aerial drone that spews fire downward.
-              Added in Shrouded Sky (1.17.0). As of 1.29.0, fire application
-              was improved to match visuals more closely — briefly grazing the
-              flame is no longer as punishing, reducing the "hit around
-              corners" issue. Firefly spawn rates were significantly reduced
-              in 1.22.0 (Flashpoint) and Firefly presence in Dam Battlegrounds
-              was further reduced in 1.26.0 (Riven Tides). Particularly
-              dangerous during Hurricane map conditions.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Aerial drone that spews fire downward. Added
+              in Shrouded Sky (1.17.0). Fire application improved in 1.29.0 —
+              grazing the flame edge is no longer as punishing, fixing the
+              "hit around corners" feel. Spawn rates reduced in 1.22.0; Dam
+              Battlegrounds presence further reduced in 1.26.0. Especially
+              dangerous during Hurricane map conditions.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Fuel tank (rear/underside)</span>
               <span class="tag weak">Thrusters</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Semi-auto rifle (fuel tank
                 shots)</span>
@@ -1019,88 +1063,102 @@
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Keep moving — its downward fire spray
-            can't track a fast-moving ground target effectively. Aim for the
-            fuel tank under its body for bonus damage. During Hurricane
-            conditions, listen for its jet-engine audio cue. The 1.29.0 fire
-            fix means grazing the edge of its flame is no longer an
-            insta-punish — use that to stay more aggressive in close quarters.
+            <strong>Strategy</strong>
+            Keep moving — its downward spray can't track a fast-moving ground
+            target well. Aim for the fuel tank for bonus damage. During
+            Hurricane, listen for its jet-engine audio cue before you see it.
+            The 1.29.0 fire fix means you can be slightly more aggressive at
+            the edge of its flame range.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- COMET -->
-      <div class="enemy-card tier-medium-card" id="comet">
-        <div class="card-header">
-          <div class="enemy-name">Comet</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~150</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="comet">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Comet</span>
+              <span class="enemy-hp">HP ~150</span>
+              <span class="patch-chip">⚠ Spawns reduced 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Core (detonation)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Heavily armored ground unit added in
-              Shrouded Sky (1.17.0). Charges at full speed on detection, then
-              splits its armor to reveal an explosive core and detonates in a
-              devastating seismic explosion. In 1.26.0 (Riven Tides), Comets
-              were removed from standard Dam Battlegrounds sessions and their
-              presence in Buried City was reduced, as they were raising
-              difficulty in beginner sessions too high.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Heavily armored ground unit (Shrouded Sky,
+              1.17.0). Charges at full speed, splits armor to reveal an
+              explosive core, then detonates with a seismic explosion that
+              goes through surfaces. Removed from standard Dam Battlegrounds
+              sessions in 1.26.0; presence reduced in Buried City.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Core (only exposed at
                 point of detonation)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">High-damage single shot (rifle,
                 shotgun)</span>
-              <span class="tag item">EMP Grenade (stalls its charge)</span>
-              <span class="tag item">Height advantage (ledge / rooftop)</span>
+              <span class="tag item">EMP Grenade (stalls charge)</span>
+              <span class="tag item">Height advantage — ledge or
+                rooftop</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Run perpendicular to its charge rather
-            than straight back — it has a fixed charge path. Stall it with an
-            EMP then fire heavy rounds into the exposed core. Do not hide
-            behind cover for the detonation — the seismic shockwave goes
-            through surfaces. Best position is height: get on a ledge or
-            rooftop it can't reach before it detonates.
+            <strong>Strategy</strong>
+            Run perpendicular to its charge, not straight back — it has a
+            fixed charge path. Stall it with an EMP then fire into the exposed
+            core. Do not hide behind cover for the detonation — the seismic
+            shockwave goes through surfaces. Best position is height.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- SURVEYOR -->
-      <div class="enemy-card tier-medium-card" id="surveyor">
-        <div class="card-header">
-          <div class="enemy-name">Surveyor</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~257–400</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="surveyor">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Surveyor</span>
+              <span class="enemy-hp">HP ~257–400</span>
+              <span class="patch-chip">⚠ Patrol fix 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Core (laser/transmit)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Large spherical ARC that rolls patrol
-              routes. Stops to fire a precision laser at detected players.
-              Heavily armored while rolling — almost impenetrable in ball form
-              from all angles. Opens a panel to fire the laser, briefly
-              exposing its core. Also opens when transmitting data. In 1.26.0,
-              a bug was fixed where Vaporizer and Surveyor patrols could stop
-              moving until alerted — they now patrol correctly.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Large spherical ARC that rolls patrol routes
+              and fires a precision laser. Nearly impenetrable while rolling.
+              Opens a panel to fire, briefly exposing its core. Also opens
+              when transmitting data while stationary. A patrol movement bug
+              (stopped until alerted) was fixed in 1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Core (exposed during
-                laser fire / transmit only)</span></div>
+                laser fire / data transmit only)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Heavy ammo rifle (core shots)</span>
               <span class="tag weapon">Shotgun burst on exposed core</span>
@@ -1109,89 +1167,102 @@
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Don't waste ammo on its rolling shell.
-            Wait for it to stop and open up for the laser or a data
-            transmission, then dump the heaviest weapon you have into the
-            core. Use cover to avoid the laser while it tracks. EMPs interrupt
-            the attack cycle and buy an extra damage window. The vault it
-            carries makes the patience worthwhile.
+            <strong>Strategy</strong>
+            Don't waste ammo on its rolling shell. Wait for it to stop and
+            open up, then dump the heaviest weapon into the core. Use cover to
+            avoid the laser while it tracks. EMPs create an extra window. The
+            vault it drops is worth the patience.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- ROLLBOT -->
-      <div class="enemy-card tier-medium-card" id="rollbot">
-        <div class="card-header">
-          <div class="enemy-name">Rollbot</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~800</span></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Fully plated ball-shaped ARC that rolls at
-              high speed with the sole intent of running you over. No shooting
-              mode — pure kinetic aggression. Heavily armored from every angle
-              in ball form. Getting hit results in significant knockback and
-              damage. Can chain roll-overs if you're trapped in a corridor.
+      <details class="enemy-card" id="rollbot">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Rollbot</span>
+              <span class="enemy-hp">HP ~800</span>
             </div>
           </div>
+          <div class="summary-right">
+            <span class="weak-preview">Core seam</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
+        <div class="card-body">
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Fully plated ball that rolls at high speed to
+              crush you. No shooting mode — pure kinetic aggression. Heavily
+              armored from all angles while rolling. Can chain roll-overs if
+              you're trapped in a corridor.</p>
+          </div>
+          <div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Core seam (brief window
                 between rolls)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Heavy ammo — sustained fire on
                 seam</span>
-              <span class="tag item">EMP Grenade (stalls roll, creates
+              <span class="tag item">EMP Grenade (stops roll, creates
                 window)</span>
               <span class="tag item">High ground (limits roll paths)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Never fight in a straight corridor — it
-            will run you down. Fight in open areas where you can sidestep its
-            charge. EMP grenades stop the roll and create a damage window.
-            Dump heavy ammo into the seam between charges. Getting to higher
-            ground removes most of its threat entirely.
+            <strong>Strategy</strong>
+            Never fight in a straight corridor. Use open areas to sidestep its
+            charge. EMPs stop the roll and create a damage window. Dump heavy
+            ammo into the seam between charges. High ground removes most of
+            its threat.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- SENTINEL -->
-      <div class="enemy-card tier-medium-card" id="sentinel">
-        <div class="card-header">
-          <div class="enemy-name">Sentinel</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~300–500</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="sentinel">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Sentinel</span>
+              <span class="enemy-hp">HP ~300–500</span>
+              <span class="patch-chip">⚠ More spawns 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Yellow canister</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Heavy stationary sniper turret on rooftops
-              and elevated positions. Fires devastating high-velocity rounds
-              that chunk a major portion of health in one hit. The yellow
-              canister on its arm glows on lock-on — that's your warning.
-              Additional Sentinel spawn points were added in 1.22.0
-              (Flashpoint) with more added and spawns made more consistent in
-              1.26.0. Also, aim assist now correctly targets Sentinel leg
-              joints and weak spots as of 1.26.0.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Heavy stationary sniper turret on rooftops
+              and elevated positions. Fires high-velocity rounds that chunk a
+              large portion of health in one hit. Yellow canister on its arm
+              glows on lock-on — that's your warning. More spawn points added
+              and made more consistent in 1.26.0. Aim assist now correctly
+              targets weak spots as of 1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Yellow core canister
                 (arm)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Scoped rifle (reach the core at
+              <span class="tag weapon">Scoped rifle (reach core at
                 range)</span>
               <span class="tag weapon">Heavy ammo AR with scope</span>
               <span class="tag item">Smoke Grenade (break line of
@@ -1199,207 +1270,228 @@
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Flanking is the safest approach — get
-            out of its sightline and approach from the side or below its
-            elevation. Smoke grenades cut its targeting immediately. In direct
-            engagement, use hard cover and only peek to fire at the yellow
-            canister. One or two precise hits deal massive damage. Never stand
-            still in its sightline.
+            <strong>Strategy</strong>
+            Flanking is safest — get out of its sightline and approach from
+            the side or below. Smoke cuts its targeting immediately. In direct
+            engagement, only peek from hard cover to fire at the yellow
+            canister. Never stand still in its sightline.
           </div>
         </div>
+      </details>
+
+    </section>
+
+    <!-- ════════════════════════════════
+       HIGH / CRITICAL THREAT
+  ════════════════════════════════ -->
+    <section class="tier-group" id="large">
+      <div class="tier-heading">
+        <span class="tier-label high">Critical</span>
+        <span class="tier-title">Large Threats</span>
       </div>
 
-    </div><!-- /medium grid -->
-
-    <!-- ═══════════════════════════════════
-       LARGE / CRITICAL THREATS
-  ════════════════════════════════════ -->
-    <div class="tier-header" id="large">
-      <div class="tier-badge tier-high">Threat: High / Critical</div>
-      <div class="tier-name">Large Threats</div>
-    </div>
-
-    <div class="enemy-grid">
-
       <!-- BOMBARDIER -->
-      <div class="enemy-card tier-high-card" id="bombardier">
-        <div class="card-header">
-          <div class="enemy-name">Bombardier</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~2,670–3,000</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="bombardier">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Bombardier</span>
+              <span class="enemy-hp">HP ~2,670–3,000</span>
+              <span class="patch-chip">⚠ Coverage adj. 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Leg joints / Rear</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Tall siege-class ARC that rains mortar
-              rounds in area-denial barrages. Extremely dangerous in open
-              terrain. Also capable of a kinetic shockwave energy release at
-              closer range. Spawns Spotter drones that respawn every 20–30s
-              while it lives. In 1.26.0, Bombardier area coverage was adjusted
-              to improve navigation. Aim assist now correctly targets
-              Bombardier leg joints as of 1.26.0.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Tall siege-class ARC that rains mortar
+              barrages and releases kinetic shockwaves at closer range.
+              Extremely dangerous in open terrain. Spawns Spotter drones that
+              respawn every 20–30s while it lives. Area coverage adjusted for
+              better navigation in 1.26.0; aim assist now targets leg joints
+              correctly.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Yellow leg joints</span>
               <span class="tag weak">Rear canister</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Heavy ammo AR / LMG</span>
               <span class="tag weapon">Rocket launcher / Rascal (rear
                 canister)</span>
-              <span class="tag item">Smoke Grenade (disrupt mortar
+              <span class="tag item">Smoke Grenade (disrupts mortar
                 targeting)</span>
-              <span class="tag item">EMP Grenade (halt shockwave)</span>
+              <span class="tag item">EMP Grenade (halts shockwave)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Kill Spotter drones first — they keep
-            it informed of your position. Use buildings as mortar cover; keep
-            moving between shots. Target the glowing yellow leg joints while
-            it fires, then advance to hit the rear canister. Smoke breaks
-            mortar targeting effectively. Treat this as a sustained fight
-            requiring cover discipline, not a stand-and-gun encounter.
+            <strong>Strategy</strong>
+            Kill Spotter drones first — they keep it informed of your
+            position. Use buildings as mortar cover, keep moving. Target the
+            yellow leg joints while it fires, then advance to the rear
+            canister. Smoke breaks mortar targeting. Sustained
+            cover-discipline fight, not a stand-and-gun.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- BASTION -->
-      <div class="enemy-card tier-high-card" id="bastion">
-        <div class="card-header">
-          <div class="enemy-name">Bastion</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~2,050–5,000</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="bastion">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Bastion</span>
+              <span class="enemy-hp">HP ~2,050–5,000</span>
+              <span class="patch-chip">⚠ Accuracy fix 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Rear plate / Legs</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Four-legged walking tank with a heavy
-              turret on top. Frontal armor is exceptionally thick — direct
-              frontal engagement is highly inefficient. Fires a sustained
-              projectile volley. Slow but deliberate; it rotates to face you.
-              In 1.26.0, a bug was fixed where the Bastion could be too
-              accurate when switching targets mid-fire — it now behaves more
-              fairly in multi-target situations. Aim assist now correctly
-              targets leg joints and weak spots.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Four-legged walking tank with a heavy turret
+              on top. Frontal armor is extremely thick — direct frontal
+              engagement is inefficient. Fires a sustained projectile volley.
+              Slow but deliberate; it rotates to face you. A bug where it was
+              too accurate when switching targets mid-fire was fixed in
+              1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Rear armor plate</span>
               <span class="tag weak">Leg joints</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Rocket launcher / Rascal (rear
                 plate)</span>
               <span class="tag weapon">Heavy ammo AR / LMG (leg joints)</span>
-              <span class="tag item">Lure / Decoy (pull attention for
-                flanking)</span>
+              <span class="tag item">Lure / Decoy (pull aggro for
+                flank)</span>
               <span class="tag item">EMP Grenade (brief stagger)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> The rear plate and leg joints are where
-            meaningful damage lands — circling to its back is the core tactic.
-            In a squad, split into two groups: one holds frontal aggro while
-            the other flanks to the rear. A lure or decoy is excellent for
-            making it rotate away. Its slow turning speed is your greatest
-            advantage.
+            <strong>Strategy</strong>
+            Circle to its back — the rear plate and leg joints are where real
+            damage lands. In a squad, split: one holds frontal aggro while the
+            other flanks. A lure is excellent for making it rotate away. Its
+            slow turning speed is your greatest advantage.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- LEAPER -->
-      <div class="enemy-card tier-high-card" id="leaper">
-        <div class="card-header">
-          <div class="enemy-name">Leaper</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~1,100–3,500</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Assault-class ARC (also called Bison).
-              Leaps extraordinary distances, instantly closing any range
-              advantage. On landing it releases a kinetic shockwave that
-              staggers anyone nearby. Makes cover and ranged positioning much
-              less effective. In 1.26.0, Leaper area coverage was adjusted for
-              improved navigation and variety. Leaper distribution during
-              Night Raid conditions was also increased in 1.26.0. As of
-              1.29.0, the Leaper can jump through the ARC Turbine (known bug).
+      <details class="enemy-card" id="leaper">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Leaper</span>
+              <span class="enemy-hp">HP ~1,100–3,500</span>
+              <span class="patch-chip">⚠ Coverage adj. 1.26.0</span>
             </div>
           </div>
+          <div class="summary-right">
+            <span class="weak-preview">Leg joints / Eye</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
+        <div class="card-body">
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Assault-class ARC (also: Bison). Leaps
+              extraordinary distances, instantly erasing any range advantage.
+              On landing it releases a kinetic shockwave that staggers nearby
+              players. Area coverage and Night Raid distribution adjusted in
+              1.26.0. Known bug (1.29.0): can jump through the ARC Turbine.
+            </p>
+          </div>
+          <div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Leg joints</span>
               <span class="tag weak">Eye sensor</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Heavy ammo AR (sustained leg joint
+              <span class="tag weapon">Heavy ammo AR (sustained leg
                 fire)</span>
-              <span class="tag weapon">Shotgun (if it closes distance)</span>
-              <span class="tag item">EMP Grenade (interrupt leap
-                mid-jump)</span>
-              <span class="tag item">Explosive Grenade (shockwave
-                counter)</span>
+              <span class="tag weapon">Shotgun (after it closes
+                distance)</span>
+              <span class="tag item">EMP Grenade (interrupt mid-leap)</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Do not rely on range — this enemy
-            erases distance. Accept the close engagement and target leg joints
-            consistently. An EMP thrown as it winds up a leap can interrupt it
-            entirely. When it lands near you, immediately roll sideways to
-            avoid the shockwave AoE. Fight in enclosed areas where its leap
-            range is limited by geometry.
+            <strong>Strategy</strong>
+            Don't rely on range — it will close instantly. Accept the close
+            engagement, target leg joints consistently. EMP thrown as it winds
+            up a leap can interrupt it entirely. When it lands near you, roll
+            sideways immediately to dodge the shockwave AoE.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- ROCKETEER -->
-      <div class="enemy-card tier-high-card" id="rocketeer">
-        <div class="card-header">
-          <div class="enemy-name">Rocketeer</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~1,100–4,000</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.29.0</div>
+      <details class="enemy-card" id="rocketeer">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Rocketeer</span>
+              <span class="enemy-hp">HP ~1,100–4,000</span>
+              <span class="patch-chip">⚠ Missile spread fix 1.29.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Thrusters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Large aerial heavy platform that hovers at
-              altitude and rains rockets onto player positions. Its rockets
-              are area-denial — they punish static cover hard. As of 1.22.0
-              (Flashpoint), Rocketeers take less collision damage and won't be
-              instantly destroyed on impact when stunned. As of 1.29.0, when
-              the Rocketeer fires several missiles at once, they are now
-              spread over a larger area — preventing the unfair situation of
-              multiple missiles hitting the same spot simultaneously.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Large aerial platform that hovers at altitude
+              and rains rockets onto player positions. Area-denial — punishes
+              static cover hard. As of 1.29.0, multi-missile salvos are now
+              spread over a larger area, preventing multiple missiles from
+              hitting the same spot simultaneously.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Thrusters (require
-                sustained damage to destroy)</span></div>
+                sustained damage)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Rocket launcher / Rascal grenade
                 launcher</span>
@@ -1409,107 +1501,112 @@
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Never stay in one spot — its rockets
-            will blanket your position. Keep moving laterally between cover
-            pieces. The 1.29.0 missile spread fix means multi-missile salvos
-            are now more distributed — slightly safer to reposition through.
-            Fire rockets or heavy rounds into its thrusters while it's
-            mid-attack cycle. EMP can interrupt a rocket salvo and drop it
-            lower for easier shots.
+            <strong>Strategy</strong>
+            Never stay in one spot. Keep moving laterally between cover
+            pieces. Fire rockets into the thrusters during its attack cycle.
+            EMP interrupts a salvo and drops it lower for easier shots. The
+            1.29.0 spread fix makes multi-missile salvos slightly safer to
+            reposition through.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- VAPORIZER -->
-      <div class="enemy-card tier-high-card" id="vaporizer">
-        <div class="card-header">
-          <div class="enemy-name">Vaporizer</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~1,500–8,000</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.26.0</div>
+      <details class="enemy-card" id="vaporizer">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Vaporizer</span>
+              <span class="enemy-hp">HP ~1,500–8,000</span>
+              <span class="patch-chip">⚠ More maps 1.26.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Thrusters (no shield)</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Added in Flashpoint (1.22.0). Large aerial
-              ARC with a Matriarch-grade energy shield and precision laser
-              attacks that destroy your shield and ignite you in under two
-              seconds. Patrols ARC Operations and Close Scrutiny zones. In
-              1.26.0, Vaporizers were added to more maps and conditions beyond
-              the original Close Scrutiny event. A movement bug where
-              Vaporizer patrols could stop until alerted was also fixed in
-              1.26.0. The energy shield blocks all standard projectiles while
-              active.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Added in Flashpoint (1.22.0). Large aerial
+              ARC with a Matriarch-grade energy shield and precision lasers
+              that destroy your shield and ignite you in under two seconds.
+              Added to more maps and conditions in 1.26.0. Energy shield
+              blocks all standard projectiles while active. A patrol movement
+              bug was fixed in 1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
-            <div class="tags"><span class="tag weak">Thrusters (when shield is
-                down only)</span></div>
+            <div class="section-label">Weak Points</div>
+            <div class="tags"><span class="tag weak">Thrusters (only when
+                shield is down)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Rocket launcher (burst during shield
                 break)</span>
               <span class="tag weapon">Heavy ammo AR (thruster fire)</span>
-              <span class="tag item">EMP Grenade — CRITICAL (breaks energy
+              <span class="tag item">EMP Grenade — CRITICAL (breaks
                 shield)</span>
               <span class="tag item">Fire-resistant trinket / armor</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> EMP grenades are mandatory — they break
-            the energy shield. The moment the shield drops, dump everything
-            into the thrusters. You have a short window before it reactivates.
-            Never fight in the open; the laser will kill you before you can
-            react. Stay mobile and use building angles to break its laser
-            tracking. Fire-resistant armor dramatically extends your survival
-            time if it lands a beam. Killing one drops the Vaporizer Regulator
-            needed to craft the Dolabra energy shotgun.
+            <strong>Strategy</strong>
+            EMP grenades are mandatory — they break the energy shield. The
+            instant the shield drops, dump everything into the thrusters.
+            Short window before it reactivates. Stay mobile and use building
+            angles to break laser tracking. Killing it drops the Vaporizer
+            Regulator to craft the Dolabra shotgun.
           </div>
         </div>
+      </details>
+
+    </section>
+
+    <!-- ════════════════════════════════
+       BOSS THREATS
+  ════════════════════════════════ -->
+    <section class="tier-group" id="bosses">
+      <div class="tier-heading">
+        <span class="tier-label boss">Boss</span>
+        <span class="tier-title">Boss Encounters</span>
       </div>
 
-    </div><!-- /large grid -->
-
-    <!-- ═══════════════════════════════════
-       BOSS THREATS
-  ════════════════════════════════════ -->
-    <div class="tier-header" id="bosses">
-      <div class="tier-badge tier-boss">Threat: Extreme</div>
-      <div class="tier-name">Boss Encounters</div>
-    </div>
-    <p
-      style="color:var(--muted); font-size:13px; margin-bottom:32px; font-family:'Share Tech Mono',monospace; letter-spacing:0.04em;">
-      // These encounters require coordinated squad play. Solo engagement is
-      strongly discouraged.</p>
-
-    <div class="enemy-grid">
-
       <!-- QUEEN -->
-      <div class="enemy-card tier-boss-card" id="queen">
-        <div class="card-header">
-          <div class="enemy-name">The Queen</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~15,000–33,864</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.29.0</div>
+      <details class="enemy-card" id="queen">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">The Queen</span>
+              <span class="enemy-hp">HP ~15,000–33,864</span>
+              <span class="patch-chip">⚠ Collision fix 1.29.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Legs / Head / Core</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Apex-class boss (Harvester event).
-              Gigantic robot with heavy mortar fire, a precision laser beam,
-              an area EMP pulse, and a ground slam at close range. Her
-              missiles can obliterate an unprepared squad instantly. As of
-              1.29.0, the Queen (and Matriarch) will now more often step over
-              obstacles rather than through them, reducing instances of unfair
-              player knockback. Aim assist now correctly targets leg joints
-              and weak spots as of 1.26.0.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Apex-class boss (Harvester event). Heavy
+              mortar fire, precision laser beam, area EMP pulse, and a ground
+              slam at close range. Missiles can obliterate an unprepared
+              squad. As of 1.29.0, now more often steps over obstacles rather
+              than through them, reducing unfair knockback. Aim assist
+              correctly targets weak spots since 1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Leg joints</span>
               <span class="tag weak">Head sensors</span>
@@ -1517,169 +1614,168 @@
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Rocket launcher / Rascal (leg joints /
+              <span class="tag weapon">Rocket launcher / Rascal (joints /
                 core)</span>
               <span class="tag weapon">Heavy ammo LMG (sustained leg
                 fire)</span>
               <span class="tag item">Full squad of 3 — split aggro</span>
               <span class="tag item">EMP Grenades (interrupt laser / EMP
                 pulse)</span>
-              <span class="tag item">Shield cells / med kits — bring
+              <span class="tag item">Shield cells + med kits — bring
                 plenty</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Split the squad on opposite sides to
-            split her aggro — she cannot fire effectively at both
-            simultaneously. Designate leg joints as primary focus and all fire
-            together to strip sections. When she charges the EMP pulse, take
-            cover and shield up immediately. Avoid melee range entirely — the
-            ground slam is a near-instant kill. The 1.29.0 collision fix
-            reduces instances where her movement through obstacles causes
-            unfair knockback. Communicate phase transitions — she becomes more
-            aggressive as HP drops.
+            <strong>Strategy</strong>
+            Split the squad on opposite sides to split her aggro. Focus all
+            fire on leg joints to strip sections. Shield up immediately when
+            she charges the EMP pulse. Avoid melee range — the ground slam is
+            a near-instant kill. She becomes more aggressive as HP drops.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- MATRIARCH -->
-      <div class="enemy-card tier-boss-card" id="matriarch">
-        <div class="card-header">
-          <div class="enemy-name">Matriarch</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~20,000+</span></div>
-            <div class="patch-note">⚠ Updated: Patch 1.29.0</div>
+      <details class="enemy-card" id="matriarch">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">Matriarch</span>
+              <span class="enemy-hp">HP ~20,000+</span>
+              <span class="patch-chip">⚠ Collision fix 1.29.0</span>
+            </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Legs / Head core</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">The deadliest boss in the game. Spawns on
-              Dam Battlegrounds, Blue Gate, and Spaceport only — never on
-              Stella Montis, Buried City, or Riven Tides. Projects an energy
-              shield blocking all projectiles when active. Fires rocket
-              swarms, deploys gas mortars, uses flashbangs, and summons ARC
-              reinforcements throughout the fight. As of 1.29.0, she now more
-              often steps over obstacles rather than through them, reducing
-              unfair knockback. Aim assist correctly targets leg joints and
-              weak spots as of 1.26.0.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Deadliest boss. Spawns on Dam Battlegrounds,
+              Blue Gate, and Spaceport only — never Stella Montis, Buried
+              City, or Riven Tides. Projects an energy shield that blocks all
+              projectiles. Fires rocket swarms, deploys gas mortars, uses
+              flashbangs, and summons ARC reinforcements. Obstacle collision
+              fixed in 1.29.0; aim assist targets weak spots correctly since
+              1.26.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags">
               <span class="tag weak">Leg joints</span>
               <span class="tag weak">Head core (shield must be down)</span>
             </div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
               <span class="tag weapon">Rocket launcher / Rascal (head core
                 during shield break)</span>
-              <span class="tag weapon">Heavy ammo AR (leg joint sustained
-                fire)</span>
-              <span class="tag item">EMP Grenade — CRITICAL (breaks energy
+              <span class="tag weapon">Heavy ammo AR (leg joint
+                sustained)</span>
+              <span class="tag item">EMP Grenade — CRITICAL (breaks
                 shield)</span>
               <span class="tag item">Gas Mask / Respirator (counters gas
                 mortars)</span>
-              <span class="tag item">Assign one player exclusively to
-                adds</span>
+              <span class="tag item">Assign one player to ARC adds</span>
               <span class="tag item">Flashbang-resistant trinket</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Assign one squad member exclusively to
-            dealing with summoned ARC adds — letting them build up is a wipe
-            condition. Use EMPs to break the energy shield, then immediately
-            dump rockets or heavy fire into the head core. Gas mortars force
-            movement; equip a gas mask or keep moving through the cloud.
-            Flashbang-resistant trinkets are essential — being blinded during
-            an add wave is extremely dangerous. This is the highest
-            coordination fight in the game.
+            <strong>Strategy</strong>
+            Assign one squad member to the summoned ARC adds — letting them
+            build is a wipe condition. EMP to break the shield, then
+            immediately dump rockets into the head core. Gas mask or keep
+            moving through mortar clouds. Flashbang trinkets are essential.
+            Highest coordination fight in the game.
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- ARC TURBINE -->
-      <div class="enemy-card tier-boss-card" id="turbine">
-        <div class="card-header">
-          <div class="enemy-name">ARC Turbine</div>
-          <div class="enemy-meta">
-            <div class="hp-badge">HP <span>~4,000</span></div>
-            <div class="patch-note">⚠ Added: Patch 1.26.0 · Fixed: 1.29.0
+      <details class="enemy-card" id="turbine">
+        <summary class="enemy-summary">
+          <div class="summary-left">
+            <div class="enemy-name-row">
+              <span class="enemy-name">ARC Turbine</span>
+              <span class="enemy-hp">HP ~4,000</span>
+              <span class="patch-chip">⚠ Visual fixes 1.29.0</span>
             </div>
           </div>
-        </div>
+          <div class="summary-right">
+            <span class="weak-preview">Yellow canisters</span>
+            <svg class="chevron" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M5 8l5 5 5-5" />
+            </svg>
+          </div>
+        </summary>
         <div class="card-body">
           <div>
-            <div class="block-label">Attack Pattern</div>
-            <div class="block-text">Airborne boss added in Riven Tides
-              (1.26.0), exclusive to the Riven Tides map. Massive cone-shaped
-              aerial machine that operates in two distinct phases. In its
-              <strong>flying phase</strong> it is nearly invulnerable — do not
-              waste ammo. It launches a spike into the air that splits into 3
-              projectiles, creating lightning arcs that penetrate cover and
-              walls. It also deploys mines across a wide perimeter. Spawns
-              after 15 minutes into a match, and can spawn in duos or trios.
-              In its <strong>ground phase</strong>, it lands on three legs and
-              opens its core — exposing three spinning yellow canisters. You
-              have roughly 4–5 shots worth of time before it lifts off. In
-              1.29.0, several ARC Turbine visual and positioning bugs were
-              fixed, and the odds of getting burned when inside it were
-              increased.</div>
+            <div class="section-label">Attack Pattern</div>
+            <p class="body-text">Airborne boss exclusive to Riven Tides (added
+              1.26.0). Massive cone-shaped aerial machine with two phases.
+              Flying phase: nearly invulnerable — do not waste ammo. Launches
+              a spike that splits into 3 lightning projectiles that penetrate
+              walls. Deploys mines in a wide perimeter. Spawns after 15
+              minutes into a match; can appear in duos or trios. Ground phase:
+              lands on three legs, opens its core to reveal three spinning
+              yellow canisters — you have roughly 4–5 shots before it lifts
+              off. Visual/positioning fixes and increased burn odds when
+              inside it in 1.29.0.</p>
           </div>
           <div>
-            <div class="block-label">Weak Points</div>
+            <div class="section-label">Weak Points</div>
             <div class="tags"><span class="tag weak">Three yellow spinning
                 canisters in landing gear (ground phase only)</span></div>
           </div>
           <div>
-            <div class="block-label">Recommended Weapons &amp; Items</div>
+            <div class="section-label">Weapons &amp; Items</div>
             <div class="tags">
-              <span class="tag weapon">Hullcracker (strong vs canisters per
-                community)</span>
+              <span class="tag weapon">Hullcracker (strong vs
+                canisters)</span>
               <span class="tag weapon">Jupiter / Anvil (multi-round, no reload
-                mid-window)</span>
-              <span class="tag weapon">Renegade rifle (precise mid-range
-                canister shots)</span>
-              <span class="tag item">Medium or Heavy Shield (essential for
-                survival)</span>
-              <span class="tag item">Shield rechargers + med kits — bring
-                plenty</span>
-              <span class="tag item">Do NOT bring Wolfpack — ineffective vs
-                Turbine armor</span>
+                gap)</span>
+              <span class="tag weapon">Renegade rifle (precise
+                mid-range)</span>
+              <span class="tag item">Medium or Heavy Shield — essential</span>
+              <span class="tag item">Shield rechargers + med kits in
+                quantity</span>
+              <span class="tag item">Avoid Wolfpack — ineffective vs Turbine
+                armor</span>
             </div>
           </div>
           <div class="strategy-block">
-            <strong>Strategy:</strong> Do not fire while it's airborne —
-            you'll waste ammo and trigger its attacks. Use the flying phase to
-            reposition, avoid mines, and move into cover near where it will
-            land. The Turbine tends to land when it has not been attacked for
-            a while — patience triggers the ground phase. The moment it sets
-            down, all squad members fire simultaneously into the spinning
-            yellow canisters through the landing gear slits. You have a narrow
-            window of 4–5 shots before it lifts off again. After taking off,
-            it launches split-lightning grenades that penetrate walls — do not
-            shelter inside buildings expecting cover. Plan your squad
-            positions before it lands so everyone is in range the instant the
-            canisters are exposed. Killing it drops Turbine Compressors needed
-            for the Avian Alarm project and to craft the Powered Descender.
+            <strong>Strategy</strong>
+            Do not fire while airborne — immune to damage, and you'll trigger
+            mine/lightning attacks. The Turbine tends to land when it has not
+            been attacked for a while — patience triggers the ground phase.
+            The instant it sets down, all squad members fire simultaneously
+            into the spinning yellow canisters through the landing gear slits.
+            4–5 shot window. After it lifts off, its split-lightning grenades
+            penetrate walls — don't shelter inside buildings expecting cover.
+            Drops Turbine Compressors for the Avian Alarm project and Powered
+            Descender crafting.
           </div>
         </div>
-      </div>
+      </details>
 
-    </div><!-- /boss grid -->
+    </section>
 
-    <!-- FOOTER -->
-    <footer>
-      <p>ARC Raiders Field Guide — Last updated for Patch 1.29.0 (May 19,
-        2026). Enemy stats and behaviors subject to change. Official patch
-        notes at arcraiders.com/news.</p>
-    </footer>
+  </main>
 
-  </div><!-- /page-wrap -->
+  <footer>
+    ARC Raiders Field Guide — Patch 1.29.0 (May 19, 2026) ·
+    arcraiders.com/news
+  </footer>
+
 </body>
 
 </html>
