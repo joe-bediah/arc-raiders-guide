@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC Raiders — Loot Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --bg2: #ede8de;
+      --surface: #faf7f1;
+      --border: #c8bfa8;
+      --border-dark: #a89880;
+      --ink: #1e1a14;
+      --ink2: #3d3628;
+      --muted: #7a6e5e;
+      --accent: #b84c0a;
+
+      --low: #2a6b3a;       --low-bg: #e8f2eb;
+      --med: #7a5c08;       --med-bg: #f7f0dc;
+      --high: #8a2c10;      --high-bg: #f5e8e3;
+      --boss: #3d1a5c;      --boss-bg: #ede5f5;
+
+      /* map colors */
+      --dam:      #2a6b3a; --dam-bg:      #e8f2eb;
+      --buried:   #7a5c08; --buried-bg:   #f7f0dc;
+      --space:    #143a6b; --space-bg:    #e8f0f8;
+      --bluegate: #4a2080; --bluegate-bg: #ede5f5;
+      --stella:   #8a2c10; --stella-bg:   #f5e8e3;
+      --riven:    #0a5c6b; --riven-bg:    #e0f2f5;
+
+      --strategy-bg: #fffbf0;
+      --strategy-border: #c8a040;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--ink);
+      color: #f5f0e8;
+      padding: 16px 16px 0;
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 3px solid var(--accent);
+    }
+    .header-top {
+      display: flex; align-items: baseline;
+      justify-content: space-between; gap: 8px;
+      flex-wrap: wrap; padding-bottom: 10px;
+    }
+    .site-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 26px; font-weight: 700;
+      letter-spacing: 0.04em; line-height: 1; color: #f5f0e8;
+    }
+    .site-title span { color: #e8883a; }
+    .patch-badge {
+      font-size: 11px; font-weight: 600;
+      background: #e8883a; color: #1e1a14;
+      padding: 3px 8px; letter-spacing: 0.04em; white-space: nowrap; align-self: center;
+    }
+    /* page nav tabs */
+    .page-nav {
+      display: flex; gap: 0; margin-top: 0;
+    }
+    .nav-tab {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 8px 16px; color: #a09080; text-decoration: none;
+      border-top: 2px solid transparent;
+      transition: color 0.15s;
+    }
+    .nav-tab.active { color: #f5f0e8; border-top-color: #e8883a; }
+    .nav-tab:hover:not(.active) { color: #d0c8b8; }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      position: sticky; top: 75px; z-index: 90;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .search-icon {
+      font-size: 18px; color: var(--muted); flex-shrink: 0; line-height: 1;
+    }
+    #resource-search {
+      flex: 1; border: 1.5px solid var(--border-dark);
+      background: var(--surface); color: var(--ink);
+      font-family: 'Noto Sans', sans-serif; font-size: 15px;
+      padding: 8px 12px; outline: none; -webkit-appearance: none;
+      border-radius: 0;
+    }
+    #resource-search::placeholder { color: var(--muted); }
+    #resource-search:focus { border-color: var(--accent); }
+
+    /* ── MAP FILTER ── */
+    .map-filter {
+      position: sticky; top: 127px; z-index: 88;
+      display: flex; gap: 6px;
+      padding: 8px 16px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .map-filter::-webkit-scrollbar { display: none; }
+    .map-btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 5px 11px; border: 1.5px solid var(--border-dark);
+      background: var(--surface); color: var(--ink2);
+      cursor: pointer; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .map-btn:active { opacity: 0.7; }
+    .map-btn.active-all    { background: var(--ink); color: #f5f0e8; border-color: var(--ink); }
+    .map-btn.active-dam    { background: var(--dam-bg); color: var(--dam); border-color: var(--dam); }
+    .map-btn.active-buried { background: var(--buried-bg); color: var(--buried); border-color: var(--buried); }
+    .map-btn.active-space  { background: var(--space-bg); color: var(--space); border-color: var(--space); }
+    .map-btn.active-bluegate { background: var(--bluegate-bg); color: var(--bluegate); border-color: var(--bluegate); }
+    .map-btn.active-stella { background: var(--stella-bg); color: var(--stella); border-color: var(--stella); }
+    .map-btn.active-riven  { background: var(--riven-bg); color: var(--riven); border-color: var(--riven); }
+
+    /* ── VERSION NOTE ── */
+    .version-bar {
+      background: #fffbf0; border-bottom: 1px solid #c8a040;
+      padding: 10px 16px; font-size: 13px; color: var(--ink2); line-height: 1.5;
+    }
+    .version-bar strong { color: var(--accent); }
+
+    /* ── NO RESULTS ── */
+    #no-results {
+      padding: 32px 16px; text-align: center;
+      font-size: 15px; color: var(--muted);
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 0.05em;
+    }
+
+    /* ── SECTION ── */
+    .resource-section { margin-bottom: 4px; }
+
+    .section-heading {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px 10px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label-badge {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 3px 8px; border: 1.5px solid;
+    }
+    .section-label-badge.mat    { color: var(--med); border-color: var(--med); background: var(--med-bg); }
+    .section-label-badge.organic { color: var(--low); border-color: var(--low); background: var(--low-bg); }
+    .section-label-badge.arc    { color: var(--high); border-color: var(--high); background: var(--high-bg); }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px; font-weight: 700; letter-spacing: 0.03em; color: var(--ink2);
+    }
+
+    /* ── RESOURCE CARD ── */
+    .resource-card {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .resource-summary {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px; cursor: pointer;
+      list-style: none; gap: 10px;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .resource-summary::-webkit-details-marker { display: none; }
+
+    .summary-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .resource-name-row { min-width: 0; }
+    .resource-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: 0.02em;
+      color: var(--ink); line-height: 1.1; display: block;
+    }
+    .resource-sub {
+      font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 1px;
+    }
+
+    .summary-right {
+      display: flex; align-items: center; gap: 7px; flex-shrink: 0;
+    }
+    .best-map-preview {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+      padding: 3px 8px; border: 1px solid; white-space: nowrap;
+    }
+    .best-dam      { background: var(--dam-bg); color: var(--dam); border-color: var(--dam); }
+    .best-buried   { background: var(--buried-bg); color: var(--buried); border-color: var(--buried); }
+    .best-space    { background: var(--space-bg); color: var(--space); border-color: var(--space); }
+    .best-bluegate { background: var(--bluegate-bg); color: var(--bluegate); border-color: var(--bluegate); }
+    .best-stella   { background: var(--stella-bg); color: var(--stella); border-color: var(--stella); }
+    .best-riven    { background: var(--riven-bg); color: var(--riven); border-color: var(--riven); }
+    .best-any      { background: var(--bg2); color: var(--muted); border-color: var(--border-dark); }
+
+    .chevron {
+      width: 20px; height: 20px; flex-shrink: 0; color: var(--muted);
+      transition: transform 0.2s;
+    }
+    details[open] .chevron { transform: rotate(180deg); }
+
+    /* ── CARD BODY ── */
+    .card-body {
+      padding: 0 16px 18px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+
+    .block-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+    }
+    .body-text { font-size: 14px; color: var(--ink2); line-height: 1.6; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      font-size: 12px; font-weight: 500; padding: 3px 9px; line-height: 1.3;
+      border: 1px solid;
+    }
+    .tag-breach  { background: #fdf0d8; color: #7a5008; border-color: #e0b060; }
+    .tag-vehicle { background: #f0ece4; color: #5a5048; border-color: #a89880; }
+    .tag-forage  { background: var(--low-bg); color: var(--low); border-color: #80b888; }
+    .tag-enemy   { background: var(--high-bg); color: var(--high); border-color: #d08070; }
+    .tag-crate   { background: var(--space-bg); color: var(--space); border-color: #90b0d8; }
+
+    /* ── MAP ROWS ── */
+    .map-rows { display: flex; flex-direction: column; gap: 10px; }
+
+    .map-row { background: var(--bg); border: 1px solid var(--border); padding: 10px 12px; }
+
+    .map-row-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .map-chip {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      padding: 2px 8px; border: 1px solid;
+    }
+    .map-chip.dam      { background: var(--dam-bg); color: var(--dam); border-color: var(--dam); }
+    .map-chip.buried   { background: var(--buried-bg); color: var(--buried); border-color: var(--buried); }
+    .map-chip.space    { background: var(--space-bg); color: var(--space); border-color: var(--space); }
+    .map-chip.bluegate { background: var(--bluegate-bg); color: var(--bluegate); border-color: var(--bluegate); }
+    .map-chip.stella   { background: var(--stella-bg); color: var(--stella); border-color: var(--stella); }
+    .map-chip.riven    { background: var(--riven-bg); color: var(--riven); border-color: var(--riven); }
+
+    .yield-badge {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      padding: 2px 7px; border: 1px solid;
+    }
+    .yield-best { background: var(--low-bg); color: var(--low); border-color: var(--low); }
+    .yield-good { background: var(--med-bg); color: var(--med); border-color: var(--med); }
+    .yield-low  { background: var(--high-bg); color: var(--high); border-color: var(--high); }
+
+    .zone-list { display: flex; flex-direction: column; gap: 5px; }
+    .zone-entry { font-size: 13px; color: var(--ink2); line-height: 1.5; }
+    .zone-name { font-weight: 600; color: var(--ink); }
+
+    .tip-block {
+      background: var(--strategy-bg);
+      border-left: 3px solid var(--strategy-border);
+      padding: 9px 12px; font-size: 13px; color: var(--ink2); line-height: 1.6; margin-top: 6px;
+    }
+    .tip-block strong {
+      font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+      display: block; margin-bottom: 3px;
+    }
+
+    footer {
+      text-align: center; padding: 20px 16px;
+      font-size: 12px; color: var(--muted);
+      border-top: 1px solid var(--border); background: var(--bg2);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="site-title">ARC <span>Loot</span> Guide</div>
+    <div class="patch-badge">Patch 1.29.0</div>
+  </div>
+  <nav class="page-nav">
+    <a href="index.html" class="nav-tab">Enemy Guide</a>
+    <a href="looting.html" class="nav-tab active">Loot Guide</a>
+  </nav>
+</header>
+
+<div class="search-wrap">
+  <span class="search-icon">&#9906;</span>
+  <input type="search" id="resource-search" placeholder="Search resources, e.g. rusted gears…" autocomplete="off" />
+</div>
+
+<nav class="map-filter" aria-label="Filter by map">
+  <button class="map-btn active-all" data-map="all">All Maps</button>
+  <button class="map-btn" data-map="dam">Dam</button>
+  <button class="map-btn" data-map="buried">Buried City</button>
+  <button class="map-btn" data-map="space">Spaceport</button>
+  <button class="map-btn" data-map="bluegate">Blue Gate</button>
+  <button class="map-btn" data-map="stella">Stella Montis</button>
+  <button class="map-btn" data-map="riven">Riven Tides</button>
+</nav>
+
+<div class="version-bar">
+  <strong>v1.29.0 — May 19, 2026.</strong> Select a map to filter locations. Search by resource name. Loot spawns are RNG — zones listed are highest-probability locations.
+</div>
+
+<div id="no-results" style="display:none;">No resources found. Try a different map or search term.</div>
+
+<!-- ══════════════════════════════════════
+     CRAFTING MATERIALS
+══════════════════════════════════════ -->
+<section class="resource-section" id="sec-materials">
+  <div class="section-heading">
+    <span class="section-label-badge mat">Material</span>
+    <span class="section-title">Crafting Materials</span>
+  </div>
+
+  <!-- RUSTED GEARS -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella" id="rusted-gears">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Rusted Gears</span>
+          <span class="resource-sub">Industrial · Gunsmith Bench L2→L3 (need 3)</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-bluegate">BEST: Blue Gate</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-vehicle">Vehicle hoods (cars, buses)</span>
+          <span class="tag tag-breach">Generators (breach)</span>
+          <span class="tag tag-breach">Breachable cabinets (Industrial)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Underground Car Park (Checkpoint / Underpass)</span> — 30+ lootable vehicles in a compact loop. Highest car density of any map.</div>
+            </div>
+            <div class="tip-block"><strong>Route</strong>Enter via Checkpoint southwest entrance → descend to underground Underpass → breach every car hood, engine bay, trunk → extract at Checkpoint or nearest surface exit. ~10 min loop. Watch for Bastions on patrol.</div>
+          </div>
+
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">North Complex — buses near Extraction Elevator</span> — two buses with near-guaranteed spawn, widely reported by community.</div>
+              <div class="zone-entry"><span class="zone-name">Controlled Access Zone</span> (between The Breach and Power Generation Complex) — Breachable Cabinets, high drop rate. Added post-Shrouded Sky. Unlock side room with a Fuel Cell for Desk Drawers that also yield Gears.</div>
+            </div>
+            <div class="tip-block"><strong>Tip</strong>The buses are fast — hit them first, grab the Elevator extract, done. Avoid looting random cars; buses have much better rates.</div>
+          </div>
+
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Warehouse + Marano Station + Parking Garage</span> (northwest) — cars + generators. Hit Marano car park early before other raiders.</div>
+              <div class="zone-entry"><span class="zone-name">Railroad Parking Lot</span> — outside the railroad, pry open car hoods.</div>
+            </div>
+            <div class="tip-block"><strong>Tip</strong>Go at Night for less competition. Metro station extract is close to these zones. Breach generators — better rates than regular cars.</div>
+          </div>
+
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Rocket Assembly + Vehicle Maintenance areas</span> — industrial containers and vehicle hoods.</div>
+            </div>
+          </div>
+
+          <div class="map-row" data-map="stella">
+            <div class="map-row-header">
+              <span class="map-chip stella">Stella Montis</span>
+              <span class="yield-badge yield-low">HIGH RISK</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Loading Bay</span> — green breachable containers. Recommended only if already farming here for other reasons.</div>
+            </div>
+            <div class="tip-block"><strong>Warning</strong>Stella Montis has heavy ARC presence. Not worth the run just for Rusted Gears — Blue Gate is safer and better yield.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUSTED TOOLS -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella" id="rusted-tools">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Rusted Tools</span>
+          <span class="resource-sub">Industrial · Workshop upgrades, recycling</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Dam</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-breach">Breachable tool cabinets</span>
+          <span class="tag tag-crate">Industrial crates / lockers</span>
+          <span class="tag tag-vehicle">Vehicle hoods (secondary)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — high-density industrial zone, crates and tool cabinets.</div>
+              <div class="zone-entry"><span class="zone-name">Formicai Outpost area</span> — good concentration of mechanical loot containers.</div>
+            </div>
+            <div class="tip-block"><strong>Route</strong>Formicai Outpost → Water Tower → Hydroponic Domes → Electrical Substation → Raider's Hatch extract. ~8–12 min.</div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Outskirt warehouses</span> — edge-of-map industrial buildings. Lower ARC density than main zones.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hangar bays + Jiangsu Warehouse</span> — industrial crates throughout.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Checkpoint area (outdoor + underground)</span> — dense loot containers.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- MECHANICAL COMPONENTS -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella" id="mechanical-components">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Mechanical Components</span>
+          <span class="resource-sub">Mechanical · Weapon crafting &amp; repair, workshop upgrades</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-bluegate">BEST: Blue Gate</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-breach">Breachable mechanical containers</span>
+          <span class="tag tag-vehicle">Vehicle hoods</span>
+          <span class="tag tag-crate">Industrial crates</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Also craftable</div>
+        <p class="body-text">Refiner Level 1: 7× Metal Parts + 3× Rubber Parts. Also drops from larger ARC (Bastions, Leapers). Scrappy can provide 1 per run if set to bring components.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Checkpoint</span> — outdoor area and underground zone. Highest density of Mechanical loot containers of any single POI.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — strong mechanical loot concentration.</div>
+              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span> — several crates worth farming.</div>
+              <div class="zone-entry"><span class="zone-name">Loading Bay</span> — fewer crates but close to extraction.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hangar bays + Shipping Warehouse</span> — abundant mechanical containers, higher ARC competition.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-low">LOW</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry">No dedicated Mechanical zones. Check outskirt warehouses only — lower yield than other maps.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="stella">
+            <div class="map-row-header">
+              <span class="map-chip stella">Stella Montis</span>
+              <span class="yield-badge yield-good">GOOD (HIGH RISK)</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Factory sections</span> — excellent yield but significantly elevated ARC presence. Experienced players only.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- COOLING COILS -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate" id="cooling-coils">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Cooling Coils</span>
+          <span class="resource-sub">Industrial · Expedition 2 Phase 2 (need 4) · Recycles → 2× Steel Springs</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Dam</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-crate">Red lockers</span>
+          <span class="tag tag-breach">Breachable crates</span>
+          <span class="tag tag-crate">Toolboxes</span>
+          <span class="tag tag-crate">Electronic wall panels</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Note</div>
+        <p class="body-text">Rare item. Don't confuse with Cooling Fans (different item for a different Expedition). Carry up to 3 at once; Safe Pocket them immediately.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — compact loop, best red locker density. Most efficient time-per-coil of any zone.</div>
+              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span> — secondary target, worth hitting if Domes come up empty.</div>
+              <div class="zone-entry"><span class="zone-name">Loading Bay + Power Generation Complex</span> — additional Industrial containers.</div>
+              <div class="zone-entry"><span class="zone-name">Water Treatment Control outbuildings</span> — red lockers near Raider Hatches.</div>
+            </div>
+            <div class="tip-block"><strong>Route</strong>Most players complete the 4-coil requirement in 2–3 Dam raids. Target Domes first; extract at Raider's Hatch.</div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Jiangsu Warehouse</span> — best Spaceport target for Cooling Coils.</div>
+              <div class="zone-entry"><span class="zone-name">All Industrial POIs</span> — Spaceport has the most Industrial zones of any map but they're spread out.</div>
+            </div>
+            <div class="tip-block"><strong>Tip</strong>Spaceport is large — bad spawn = long run. Dam is more time-efficient unless you're already at a Spaceport Industrial POI.</div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Abandoned Housing Project</span> — Industrial containers. Good secondary option.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-low">LOW</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry">Outskirt warehouses only. Buried City lacks dedicated Industrial zones — not recommended for Coil farming.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- COOLING FANS -->
+  <details class="resource-card" data-maps="buried,space" id="cooling-fans">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Cooling Fans</span>
+          <span class="resource-sub">Technological · Expedition project requirement</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-buried">BEST: Buried City</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-breach">Breachable server doors</span>
+          <span class="tag tag-crate">Tech cabinets</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Note</div>
+        <p class="body-text">Not the same as Cooling Coils. Found in Technological zones — server rooms and research buildings. Check your Expedition Project tab to confirm which one you need.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Research building</span> — breachable server doors. Highest Cooling Fan concentration.</div>
+              <div class="zone-entry"><span class="zone-name">Space Travel building</span> — secondary target, same server door containers.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Departure Building, Launch Towers, Arrival Building</span> — Technological zones with breachable doors. More spread out than Buried City.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- MOTORS -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate" id="motors">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Motors</span>
+          <span class="resource-sub">Mechanical · Refiner L3 (need 3) · High recycle value (+160%)</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-space">BEST: Spaceport</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-vehicle">Car hoods (breach)</span>
+          <span class="tag tag-breach">Mechanical cabinets</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Note</div>
+        <p class="body-text">Save 3 for Refiner L3 before recycling any. High recycle value (2,600 coins) — sell or recycle extras after saving your 3.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Vehicle Maintenance area</span> — dedicated Mechanical zone, best Motor concentration.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Parking Garage</span> — car hoods throughout.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex + vehicle areas</span> — Mechanical containers and car hoods.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Checkpoint underground car park</span> — vehicle hoods.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ELECTRICAL COMPONENTS -->
+  <details class="resource-card" data-maps="dam,space,bluegate,stella" id="electrical-components">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Electrical Components</span>
+          <span class="resource-sub">Electrical · Workshop upgrades (need 16) · Recycle → Wires</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Dam</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-breach">Electrical panels (breach)</span>
+          <span class="tag tag-breach">Security containers</span>
+          <span class="tag tag-crate">Tech crates</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Electrical Substation</span> — highest concentration of Electrical-tagged containers.</div>
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — electrical panels throughout.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Tech buildings + Launch Tower areas</span> — Electrical zone containers.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Checkpoint underground + Security Wing</span> — electrical and security containers.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="stella">
+            <div class="map-row-header">
+              <span class="map-chip stella">Stella Montis</span>
+              <span class="yield-badge yield-good">GOOD (HIGH RISK)</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry">High-tier Electrical loot available throughout but heavy ARC density makes it costly.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- STEEL SPRINGS -->
+  <details class="resource-card" data-maps="dam,space,bluegate" id="steel-springs">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Steel Springs</span>
+          <span class="resource-sub">Industrial · Extended Magazines, Advanced Mech Components</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Recycle Coils</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Fastest Source</div>
+        <p class="body-text">Recycle Cooling Coils → 2× Steel Springs each. This is by far the most reliable method. Farming Springs directly from containers is much slower.</p>
+      </div>
+      <div>
+        <div class="block-label">Direct Farming (Container Types)</div>
+        <div class="tags">
+          <span class="tag tag-breach">Industrial breachable containers</span>
+          <span class="tag tag-crate">Red lockers (Industrial zones)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + Industrial zones</span> — same route as Cooling Coils; Springs drop from the same containers.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Industrial POIs throughout</span> — same containers as Cooling Coil runs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     NATURE & FORAGING
+══════════════════════════════════════ -->
+<section class="resource-section" id="sec-organic">
+  <div class="section-heading">
+    <span class="section-label-badge organic">Organic</span>
+    <span class="section-title">Nature &amp; Foraging</span>
+  </div>
+
+  <!-- MUSHROOMS -->
+  <details class="resource-card" data-maps="dam,bluegate,space" id="mushrooms">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Mushrooms</span>
+          <span class="resource-sub">Nature · Scrappy upgrade · Instant heal</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Dam</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Fallen logs / tree trunks</span>
+          <span class="tag tag-forage">Near water pools / soil</span>
+          <span class="tag tag-forage">Pipe corridors (damp)</span>
+          <span class="tag tag-crate">Wicker Baskets (Lush Blooms event only)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — inside the dome (water pools, soil trays) and on surrounding trees. If none inside, check outside and vice versa.</div>
+              <div class="zone-entry"><span class="zone-name">South Swamp Outpost + Old Battlegrounds</span> — fallen logs, tree trunks, near water. Lower player traffic.</div>
+              <div class="zone-entry"><span class="zone-name">Underground pipe corridors</span> — damp areas near water pipes and walkways.</div>
+            </div>
+            <div class="tip-block"><strong>Event tip</strong>Night Raid or Electromagnetic Storm on Dam = highest density. Lush Blooms adds wicker baskets across the map.</div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-good">GOOD (event)</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Basement zones + Raider's Hideout trees</span> — secondary find, 1–2 mushrooms as a bonus while farming Olives or Prickly Pears here.</div>
+              <div class="zone-entry"><span class="zone-name">Lush Blooms Wicker Baskets</span> — Blue Gate gets basket spawns during the event with frequent mushrooms.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-low">LOW</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry">Occasional mushrooms in shaded areas south of Little Hangar. Not worth a dedicated run.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- GREAT MULLEIN -->
+  <details class="resource-card" data-maps="dam" id="great-mullein">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Great Mullein</span>
+          <span class="resource-sub">Nature · Advanced bandage crafting · Keep, don't sell</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">Dam Only</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Ground foraging (herb plant)</span>
+          <span class="tag tag-forage">Near soil / water in Domes</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">PRIMARY</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — shares spawn locations with Mushrooms. Check soil trays and water pool edges. Same Night Raid / EM Storm event bonus applies.</div>
+            </div>
+            <div class="tip-block"><strong>Note</strong>Great Mullein is essential for high-tier bandages and Defibrillators. Keep all you find. Much more valuable than its sell price suggests.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- MOSS -->
+  <details class="resource-card" data-maps="dam" id="moss">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Moss</span>
+          <span class="resource-sub">Nature · Defibrillator crafting · Keep, don't sell</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">Dam Only</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Ground foraging (damp surfaces)</span>
+          <span class="tag tag-forage">Rock faces near water</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">PRIMARY</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + swamp areas</span> — damp surfaces, rocks near water. Same route as Mushrooms and Great Mullein.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- PRICKLY PEAR -->
+  <details class="resource-card" data-maps="buried,bluegate,space" id="prickly-pear">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Prickly Pear</span>
+          <span class="resource-sub">Nature · Stamina / Scrappy upgrade</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-bluegate">BEST: Blue Gate</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Desert / rocky ground</span>
+          <span class="tag tag-forage">Cactus plants (forage)</span>
+          <span class="tag tag-crate">Wicker Baskets (Lush Blooms)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Village area</span> — rocky terrain, highest Prickly Pear density. Pair with Olive farming here.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Southern desert zones + rocky ridges</span> — arid terrain throughout southern Buried City.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-low">LOW</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry">Sparse — outer apron and rocky slopes. Not worth a dedicated run.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- LEMONS -->
+  <details class="resource-card" data-maps="bluegate,buried" id="lemons">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Lemons</span>
+          <span class="resource-sub">Nature · Stamina / Scrappy upgrade</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-bluegate">BEST: Blue Gate</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Orchard trees (forage)</span>
+          <span class="tag tag-forage">Garden plots</span>
+          <span class="tag tag-crate">Wicker Baskets (Lush Blooms)</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Green valleys + orchards</span> — Blue Gate's flora biome is perfect for Lemons. Highest density of any map.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Library + Town Hall gardens</span> — small garden plots.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- APRICOTS -->
+  <details class="resource-card" data-maps="bluegate,buried,dam" id="apricots">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Apricots</span>
+          <span class="resource-sub">Nature · Scrappy upgrade · Baskets &amp; caches</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-bluegate">BEST: Blue Gate</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Orchard trees</span>
+          <span class="tag tag-crate">Wicker Baskets</span>
+          <span class="tag tag-crate">Caches</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header">
+              <span class="map-chip bluegate">Blue Gate</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Orchards + green valley areas</span> — same zones as Lemons, good double-dip.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Southern desert belts + rocky ridges</span> — found alongside Agave in dry zones.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — occasional spawns alongside other herbs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- AGAVE -->
+  <details class="resource-card" data-maps="dam,buried,space" id="agave">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">Agave</span>
+          <span class="resource-sub">Nature · Agave Juice (stamina regen) · Scrappy upgrade</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-dam">BEST: Dam</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Container Types</div>
+        <div class="tags">
+          <span class="tag tag-forage">Desert / dry ground plants</span>
+          <span class="tag tag-forage">Hydroponic plots</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header">
+              <span class="map-chip dam">Dam Battlegrounds</span>
+              <span class="yield-badge yield-best">BEST</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex — Pattern House</span> — dedicated Agave spawns in hydroponic plots.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header">
+              <span class="map-chip buried">Buried City</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Desert zone outskirts</span> — dry terrain throughout.</div>
+            </div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header">
+              <span class="map-chip space">Spaceport</span>
+              <span class="yield-badge yield-good">GOOD</span>
+            </div>
+            <div class="zone-list">
+              <div class="zone-entry"><span class="zone-name">Outer apron + dusty slopes + east container yards</span> — lower competition, safe pickups while avoiding PvP lanes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     ARC COMPONENTS
+══════════════════════════════════════ -->
+<section class="resource-section" id="sec-arc">
+  <div class="section-heading">
+    <span class="section-label-badge arc">ARC Drop</span>
+    <span class="section-title">ARC Components</span>
+  </div>
+
+  <!-- ARC ALLOY -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella,riven" id="arc-alloy">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">ARC Alloy</span>
+          <span class="resource-sub">ARC Drop · Workshop upgrades &amp; Expedition · All maps</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-any">Any Map</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Source</div>
+        <div class="tags">
+          <span class="tag tag-enemy">All ARC enemies (every kill)</span>
+          <span class="tag tag-crate">ARC Wreckages (looting destroyed ARC)</span>
+          <span class="tag tag-crate">ARC Probes / Couriers</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Best Farming</div>
+        <p class="body-text">ARC Alloy drops from every ARC you destroy. The most efficient farming is clearing ARC patrols on whichever map you're already running. Looting ARC Wreckages (destroyed enemy bodies) gives a bonus yield. Probes and Couriers are lootable without fighting.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header"><span class="map-chip dam">Dam Battlegrounds</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">Industrial Zone perimeter — high ARC patrol density, Probe spawns.</div></div>
+          </div>
+          <div class="map-row" data-map="stella">
+            <div class="map-row-header"><span class="map-chip stella">Stella Montis</span><span class="yield-badge yield-best">BEST (HIGH RISK)</span></div>
+            <div class="zone-list"><div class="zone-entry">Highest ARC density of all maps — the most Alloy per run, but also the most danger. Recommended for experienced players with solid loadouts.</div></div>
+          </div>
+          <div class="map-row" data-map="buried">
+            <div class="map-row-header"><span class="map-chip buried">Buried City</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">Standard ARC patrols throughout. Good volume without extreme danger.</div></div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header"><span class="map-chip space">Spaceport</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">ARC patrols across large map — efficient if you're looting here anyway.</div></div>
+          </div>
+          <div class="map-row" data-map="bluegate">
+            <div class="map-row-header"><span class="map-chip bluegate">Blue Gate</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">Standard patrol density. Good for combined plant + ARC Alloy runs.</div></div>
+          </div>
+          <div class="map-row" data-map="riven">
+            <div class="map-row-header"><span class="map-chip riven">Riven Tides</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">Newer map — ARC patrol data still being documented. Standard drops from all kills.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ARC POWERCELL -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella,riven" id="arc-powercell">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">ARC Powercell</span>
+          <span class="resource-sub">ARC Drop · Crafting &amp; Workshop · Drops from most ARC</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-any">Any Map</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Source</div>
+        <div class="tags">
+          <span class="tag tag-enemy">All standard ARC enemies</span>
+          <span class="tag tag-crate">ARC Probes / Couriers</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Best Farming</div>
+        <p class="body-text">Drops alongside ARC Alloy from every ARC kill. Target Wasps and Hornets for fast kills with reliable drops. Also commonly found in ARC Probes which don't require combat.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- ARC CIRCUITRY -->
+  <details class="resource-card" data-maps="dam,buried,space,bluegate,stella" id="arc-circuitry">
+    <summary class="resource-summary">
+      <div class="summary-left">
+        <div class="resource-name-row">
+          <span class="resource-name">ARC Circuitry</span>
+          <span class="resource-sub">ARC Drop (Rare) · Workshop upgrades · Boss &amp; Elite drops</span>
+        </div>
+      </div>
+      <div class="summary-right">
+        <span class="best-map-preview best-stella">BEST: Stella Montis</span>
+        <svg class="chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l5 5 5-5"/></svg>
+      </div>
+    </summary>
+    <div class="card-body">
+      <div>
+        <div class="block-label">Source</div>
+        <div class="tags">
+          <span class="tag tag-enemy">Surveyors (primary drop)</span>
+          <span class="tag tag-enemy">Boss-tier ARC (Bastions, Queens)</span>
+          <span class="tag tag-crate">ARC Probes</span>
+        </div>
+      </div>
+      <div>
+        <div class="block-label">Best Farming</div>
+        <p class="body-text">Farm Surveyors — they reliably drop ARC Circuitry and carry a Surveyor Vault. Dam Battlegrounds Industrial Zone has Surveyor patrols at lower risk than Stella Montis. Electromagnetic Storm events on Dam and Stella Montis increase boss ARC spawns, improving drop rates.</p>
+      </div>
+      <div>
+        <div class="block-label">Locations by Map</div>
+        <div class="map-rows">
+          <div class="map-row" data-map="dam">
+            <div class="map-row-header"><span class="map-chip dam">Dam Battlegrounds</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry"><span class="zone-name">Industrial Zone perimeter</span> — Surveyor patrols. Best risk-to-reward ratio for Circuitry. EM Storm events boost boss ARC spawns here.</div></div>
+          </div>
+          <div class="map-row" data-map="stella">
+            <div class="map-row-header"><span class="map-chip stella">Stella Montis</span><span class="yield-badge yield-best">BEST (HIGH RISK)</span></div>
+            <div class="zone-list"><div class="zone-entry">Highest concentration of Surveyors and boss ARC. Most Circuitry per run, but elite loadout required.</div></div>
+          </div>
+          <div class="map-row" data-map="space">
+            <div class="map-row-header"><span class="map-chip space">Spaceport</span><span class="yield-badge yield-good">GOOD</span></div>
+            <div class="zone-list"><div class="zone-entry">Surveyor patrols in tech areas. Good secondary option.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+<footer>
+  ARC Raiders Loot Guide — Patch 1.29.0 (May 19, 2026) · Loot is RNG — zones listed are highest-probability locations · arcraiders.com/news
+</footer>
+
+<script>
+  const searchInput = document.getElementById('resource-search');
+  const mapBtns = document.querySelectorAll('.map-btn');
+  const cards = document.querySelectorAll('.resource-card');
+  const sections = document.querySelectorAll('.resource-section');
+  const noResults = document.getElementById('no-results');
+
+  let activeMap = 'all';
+
+  function applyFilters() {
+    const term = searchInput.value.toLowerCase().trim();
+    let anyVisible = false;
+
+    cards.forEach(card => {
+      const name = card.querySelector('.resource-name').textContent.toLowerCase();
+      const sub = card.querySelector('.resource-sub').textContent.toLowerCase();
+      const cardMaps = (card.dataset.maps || '').split(',');
+
+      const matchesSearch = !term || name.includes(term) || sub.includes(term);
+      const matchesMap = activeMap === 'all' || cardMaps.includes(activeMap);
+
+      const show = matchesSearch && matchesMap;
+      card.style.display = show ? '' : 'none';
+      if (show) anyVisible = true;
+
+      // show/hide individual map rows inside the card
+      card.querySelectorAll('.map-row').forEach(row => {
+        if (activeMap === 'all') {
+          row.style.display = '';
+        } else {
+          row.style.display = row.dataset.map === activeMap ? '' : 'none';
+        }
+      });
+    });
+
+    // hide empty sections
+    sections.forEach(sec => {
+      const visible = [...sec.querySelectorAll('.resource-card')]
+        .some(c => c.style.display !== 'none');
+      sec.style.display = visible ? '' : 'none';
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  // map filter
+  mapBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      mapBtns.forEach(b => {
+        b.className = 'map-btn';
+      });
+      activeMap = btn.dataset.map;
+      btn.classList.add('active-' + activeMap);
+      applyFilters();
+    });
+  });
+
+  // search
+  searchInput.addEventListener('input', applyFilters);
+
+  // init
+  applyFilters();
+</script>
+</body>
+</html>
