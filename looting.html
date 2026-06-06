@@ -191,11 +191,11 @@
     .resource-name-row { min-width: 0; }
     .resource-name {
       font-family: 'Rajdhani', sans-serif;
-      font-size: 20px; font-weight: 700; letter-spacing: 0.02em;
+      font-size: 22px; font-weight: 700; letter-spacing: 0.02em;
       color: var(--ink); line-height: 1.1; display: block;
     }
     .resource-sub {
-      font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 1px;
+      font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 1px;
     }
 
     .summary-right {
@@ -221,9 +221,9 @@
 
     /* ── CARD BODY ── */
     .card-body {
-      padding: 0 16px 18px;
+      padding: 14px 16px 20px;
       border-top: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 14px;
+      display: flex; flex-direction: column; gap: 16px;
     }
 
     .block-label {
@@ -231,11 +231,11 @@
       font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
     }
-    .body-text { font-size: 14px; color: var(--ink2); line-height: 1.6; }
+    .body-text { font-size: 15px; color: var(--ink2); line-height: 1.65; }
 
     .tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .tag {
-      font-size: 12px; font-weight: 500; padding: 3px 9px; line-height: 1.3;
+      font-size: 13px; font-weight: 500; padding: 4px 10px; line-height: 1.3;
       border: 1px solid;
     }
     .tag-breach  { background: #fdf0d8; color: #7a5008; border-color: #e0b060; }
@@ -245,9 +245,9 @@
     .tag-crate   { background: var(--space-bg); color: var(--space); border-color: #90b0d8; }
 
     /* ── MAP ROWS ── */
-    .map-rows { display: flex; flex-direction: column; gap: 10px; }
+    .map-rows { display: flex; flex-direction: column; gap: 12px; }
 
-    .map-row { background: var(--bg); border: 1px solid var(--border); padding: 10px 12px; }
+    .map-row { background: var(--bg); border: 1px solid var(--border); padding: 12px 14px; }
 
     .map-row-header {
       display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
@@ -273,19 +273,22 @@
     .yield-good { background: var(--med-bg); color: var(--med); border-color: var(--med); }
     .yield-low  { background: var(--high-bg); color: var(--high); border-color: var(--high); }
 
-    .zone-list { display: flex; flex-direction: column; gap: 5px; }
-    .zone-entry { font-size: 13px; color: var(--ink2); line-height: 1.5; }
-    .zone-name { font-weight: 600; color: var(--ink); }
+    .zone-list { display: flex; flex-direction: column; gap: 10px; }
+    .zone-entry { font-size: 15px; color: var(--ink2); line-height: 1.6; }
+    .zone-name {
+      font-weight: 600; color: var(--ink);
+      display: block; margin-bottom: 2px;
+    }
 
     .tip-block {
       background: var(--strategy-bg);
       border-left: 3px solid var(--strategy-border);
-      padding: 9px 12px; font-size: 13px; color: var(--ink2); line-height: 1.6; margin-top: 6px;
+      padding: 12px 14px; font-size: 15px; color: var(--ink2); line-height: 1.65; margin-top: 8px;
     }
     .tip-block strong {
-      font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-      display: block; margin-bottom: 3px;
+      display: block; margin-bottom: 4px;
     }
 
     footer {
@@ -371,7 +374,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Underground Car Park (Checkpoint / Underpass)</span> — 30+ lootable vehicles in a compact loop. Highest car density of any map.</div>
+              <div class="zone-entry"><span class="zone-name">Underground Car Park (Checkpoint / Underpass)</span>30+ lootable vehicles in a compact loop. Highest car density of any map.</div>
             </div>
             <div class="tip-block"><strong>Route</strong>Enter via Checkpoint southwest entrance → descend to underground Underpass → breach every car hood, engine bay, trunk → extract at Checkpoint or nearest surface exit. ~10 min loop. Watch for Bastions on patrol.</div>
           </div>
@@ -382,7 +385,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">North Complex — buses near Extraction Elevator</span> — two buses with near-guaranteed spawn, widely reported by community.</div>
+              <div class="zone-entry"><span class="zone-name">North Complex — buses near Extraction Elevator</span>two buses with near-guaranteed spawn, widely reported by community.</div>
               <div class="zone-entry"><span class="zone-name">Controlled Access Zone</span> (between The Breach and Power Generation Complex) — Breachable Cabinets, high drop rate. Added post-Shrouded Sky. Unlock side room with a Fuel Cell for Desk Drawers that also yield Gears.</div>
             </div>
             <div class="tip-block"><strong>Tip</strong>The buses are fast — hit them first, grab the Elevator extract, done. Avoid looting random cars; buses have much better rates.</div>
@@ -395,7 +398,7 @@
             </div>
             <div class="zone-list">
               <div class="zone-entry"><span class="zone-name">Warehouse + Marano Station + Parking Garage</span> (northwest) — cars + generators. Hit Marano car park early before other raiders.</div>
-              <div class="zone-entry"><span class="zone-name">Railroad Parking Lot</span> — outside the railroad, pry open car hoods.</div>
+              <div class="zone-entry"><span class="zone-name">Railroad Parking Lot</span>outside the railroad, pry open car hoods.</div>
             </div>
             <div class="tip-block"><strong>Tip</strong>Go at Night for less competition. Metro station extract is close to these zones. Breach generators — better rates than regular cars.</div>
           </div>
@@ -406,7 +409,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Rocket Assembly + Vehicle Maintenance areas</span> — industrial containers and vehicle hoods.</div>
+              <div class="zone-entry"><span class="zone-name">Rocket Assembly + Vehicle Maintenance areas</span>industrial containers and vehicle hoods.</div>
             </div>
           </div>
 
@@ -416,7 +419,7 @@
               <span class="yield-badge yield-low">HIGH RISK</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Loading Bay</span> — green breachable containers. Recommended only if already farming here for other reasons.</div>
+              <div class="zone-entry"><span class="zone-name">Loading Bay</span>green breachable containers. Recommended only if already farming here for other reasons.</div>
             </div>
             <div class="tip-block"><strong>Warning</strong>Stella Montis has heavy ARC presence. Not worth the run just for Rusted Gears — Blue Gate is safer and better yield.</div>
           </div>
@@ -458,8 +461,8 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — high-density industrial zone, crates and tool cabinets.</div>
-              <div class="zone-entry"><span class="zone-name">Formicai Outpost area</span> — good concentration of mechanical loot containers.</div>
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span>high-density industrial zone, crates and tool cabinets.</div>
+              <div class="zone-entry"><span class="zone-name">Formicai Outpost area</span>good concentration of mechanical loot containers.</div>
             </div>
             <div class="tip-block"><strong>Route</strong>Formicai Outpost → Water Tower → Hydroponic Domes → Electrical Substation → Raider's Hatch extract. ~8–12 min.</div>
           </div>
@@ -469,7 +472,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Outskirt warehouses</span> — edge-of-map industrial buildings. Lower ARC density than main zones.</div>
+              <div class="zone-entry"><span class="zone-name">Outskirt warehouses</span>edge-of-map industrial buildings. Lower ARC density than main zones.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -478,7 +481,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hangar bays + Jiangsu Warehouse</span> — industrial crates throughout.</div>
+              <div class="zone-entry"><span class="zone-name">Hangar bays + Jiangsu Warehouse</span>industrial crates throughout.</div>
             </div>
           </div>
           <div class="map-row" data-map="bluegate">
@@ -487,7 +490,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Checkpoint area (outdoor + underground)</span> — dense loot containers.</div>
+              <div class="zone-entry"><span class="zone-name">Checkpoint area (outdoor + underground)</span>dense loot containers.</div>
             </div>
           </div>
         </div>
@@ -531,7 +534,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Checkpoint</span> — outdoor area and underground zone. Highest density of Mechanical loot containers of any single POI.</div>
+              <div class="zone-entry"><span class="zone-name">Checkpoint</span>outdoor area and underground zone. Highest density of Mechanical loot containers of any single POI.</div>
             </div>
           </div>
           <div class="map-row" data-map="dam">
@@ -540,9 +543,9 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — strong mechanical loot concentration.</div>
-              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span> — several crates worth farming.</div>
-              <div class="zone-entry"><span class="zone-name">Loading Bay</span> — fewer crates but close to extraction.</div>
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span>strong mechanical loot concentration.</div>
+              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span>several crates worth farming.</div>
+              <div class="zone-entry"><span class="zone-name">Loading Bay</span>fewer crates but close to extraction.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -551,7 +554,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hangar bays + Shipping Warehouse</span> — abundant mechanical containers, higher ARC competition.</div>
+              <div class="zone-entry"><span class="zone-name">Hangar bays + Shipping Warehouse</span>abundant mechanical containers, higher ARC competition.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -569,7 +572,7 @@
               <span class="yield-badge yield-good">GOOD (HIGH RISK)</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Factory sections</span> — excellent yield but significantly elevated ARC presence. Experienced players only.</div>
+              <div class="zone-entry"><span class="zone-name">Factory sections</span>excellent yield but significantly elevated ARC presence. Experienced players only.</div>
             </div>
           </div>
         </div>
@@ -614,10 +617,10 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — compact loop, best red locker density. Most efficient time-per-coil of any zone.</div>
-              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span> — secondary target, worth hitting if Domes come up empty.</div>
-              <div class="zone-entry"><span class="zone-name">Loading Bay + Power Generation Complex</span> — additional Industrial containers.</div>
-              <div class="zone-entry"><span class="zone-name">Water Treatment Control outbuildings</span> — red lockers near Raider Hatches.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span>compact loop, best red locker density. Most efficient time-per-coil of any zone.</div>
+              <div class="zone-entry"><span class="zone-name">Research &amp; Administration</span>secondary target, worth hitting if Domes come up empty.</div>
+              <div class="zone-entry"><span class="zone-name">Loading Bay + Power Generation Complex</span>additional Industrial containers.</div>
+              <div class="zone-entry"><span class="zone-name">Water Treatment Control outbuildings</span>red lockers near Raider Hatches.</div>
             </div>
             <div class="tip-block"><strong>Route</strong>Most players complete the 4-coil requirement in 2–3 Dam raids. Target Domes first; extract at Raider's Hatch.</div>
           </div>
@@ -627,8 +630,8 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Jiangsu Warehouse</span> — best Spaceport target for Cooling Coils.</div>
-              <div class="zone-entry"><span class="zone-name">All Industrial POIs</span> — Spaceport has the most Industrial zones of any map but they're spread out.</div>
+              <div class="zone-entry"><span class="zone-name">Jiangsu Warehouse</span>best Spaceport target for Cooling Coils.</div>
+              <div class="zone-entry"><span class="zone-name">All Industrial POIs</span>Spaceport has the most Industrial zones of any map but they're spread out.</div>
             </div>
             <div class="tip-block"><strong>Tip</strong>Spaceport is large — bad spawn = long run. Dam is more time-efficient unless you're already at a Spaceport Industrial POI.</div>
           </div>
@@ -638,7 +641,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Abandoned Housing Project</span> — Industrial containers. Good secondary option.</div>
+              <div class="zone-entry"><span class="zone-name">Abandoned Housing Project</span>Industrial containers. Good secondary option.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -690,8 +693,8 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Research building</span> — breachable server doors. Highest Cooling Fan concentration.</div>
-              <div class="zone-entry"><span class="zone-name">Space Travel building</span> — secondary target, same server door containers.</div>
+              <div class="zone-entry"><span class="zone-name">Research building</span>breachable server doors. Highest Cooling Fan concentration.</div>
+              <div class="zone-entry"><span class="zone-name">Space Travel building</span>secondary target, same server door containers.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -700,7 +703,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Departure Building, Launch Towers, Arrival Building</span> — Technological zones with breachable doors. More spread out than Buried City.</div>
+              <div class="zone-entry"><span class="zone-name">Departure Building, Launch Towers, Arrival Building</span>Technological zones with breachable doors. More spread out than Buried City.</div>
             </div>
           </div>
         </div>
@@ -743,7 +746,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Vehicle Maintenance area</span> — dedicated Mechanical zone, best Motor concentration.</div>
+              <div class="zone-entry"><span class="zone-name">Vehicle Maintenance area</span>dedicated Mechanical zone, best Motor concentration.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -752,7 +755,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Parking Garage</span> — car hoods throughout.</div>
+              <div class="zone-entry"><span class="zone-name">Parking Garage</span>car hoods throughout.</div>
             </div>
           </div>
           <div class="map-row" data-map="dam">
@@ -761,7 +764,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Power Generation Complex + vehicle areas</span> — Mechanical containers and car hoods.</div>
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex + vehicle areas</span>Mechanical containers and car hoods.</div>
             </div>
           </div>
           <div class="map-row" data-map="bluegate">
@@ -770,7 +773,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Checkpoint underground car park</span> — vehicle hoods.</div>
+              <div class="zone-entry"><span class="zone-name">Checkpoint underground car park</span>vehicle hoods.</div>
             </div>
           </div>
         </div>
@@ -810,8 +813,8 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Electrical Substation</span> — highest concentration of Electrical-tagged containers.</div>
-              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span> — electrical panels throughout.</div>
+              <div class="zone-entry"><span class="zone-name">Electrical Substation</span>highest concentration of Electrical-tagged containers.</div>
+              <div class="zone-entry"><span class="zone-name">Power Generation Complex</span>electrical panels throughout.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -820,7 +823,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Tech buildings + Launch Tower areas</span> — Electrical zone containers.</div>
+              <div class="zone-entry"><span class="zone-name">Tech buildings + Launch Tower areas</span>Electrical zone containers.</div>
             </div>
           </div>
           <div class="map-row" data-map="bluegate">
@@ -829,7 +832,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Checkpoint underground + Security Wing</span> — electrical and security containers.</div>
+              <div class="zone-entry"><span class="zone-name">Checkpoint underground + Security Wing</span>electrical and security containers.</div>
             </div>
           </div>
           <div class="map-row" data-map="stella">
@@ -881,7 +884,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + Industrial zones</span> — same route as Cooling Coils; Springs drop from the same containers.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + Industrial zones</span>same route as Cooling Coils; Springs drop from the same containers.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -890,7 +893,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Industrial POIs throughout</span> — same containers as Cooling Coil runs.</div>
+              <div class="zone-entry"><span class="zone-name">Industrial POIs throughout</span>same containers as Cooling Coil runs.</div>
             </div>
           </div>
         </div>
@@ -942,9 +945,9 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — inside the dome (water pools, soil trays) and on surrounding trees. If none inside, check outside and vice versa.</div>
-              <div class="zone-entry"><span class="zone-name">South Swamp Outpost + Old Battlegrounds</span> — fallen logs, tree trunks, near water. Lower player traffic.</div>
-              <div class="zone-entry"><span class="zone-name">Underground pipe corridors</span> — damp areas near water pipes and walkways.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span>inside the dome (water pools, soil trays) and on surrounding trees. If none inside, check outside and vice versa.</div>
+              <div class="zone-entry"><span class="zone-name">South Swamp Outpost + Old Battlegrounds</span>fallen logs, tree trunks, near water. Lower player traffic.</div>
+              <div class="zone-entry"><span class="zone-name">Underground pipe corridors</span>damp areas near water pipes and walkways.</div>
             </div>
             <div class="tip-block"><strong>Event tip</strong>Night Raid or Electromagnetic Storm on Dam = highest density. Lush Blooms adds wicker baskets across the map.</div>
           </div>
@@ -954,8 +957,8 @@
               <span class="yield-badge yield-good">GOOD (event)</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Basement zones + Raider's Hideout trees</span> — secondary find, 1–2 mushrooms as a bonus while farming Olives or Prickly Pears here.</div>
-              <div class="zone-entry"><span class="zone-name">Lush Blooms Wicker Baskets</span> — Blue Gate gets basket spawns during the event with frequent mushrooms.</div>
+              <div class="zone-entry"><span class="zone-name">Basement zones + Raider's Hideout trees</span>secondary find, 1–2 mushrooms as a bonus while farming Olives or Prickly Pears here.</div>
+              <div class="zone-entry"><span class="zone-name">Lush Blooms Wicker Baskets</span>Blue Gate gets basket spawns during the event with frequent mushrooms.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -1003,7 +1006,7 @@
               <span class="yield-badge yield-best">PRIMARY</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — shares spawn locations with Mushrooms. Check soil trays and water pool edges. Same Night Raid / EM Storm event bonus applies.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span>shares spawn locations with Mushrooms. Check soil trays and water pool edges. Same Night Raid / EM Storm event bonus applies.</div>
             </div>
             <div class="tip-block"><strong>Note</strong>Great Mullein is essential for high-tier bandages and Defibrillators. Keep all you find. Much more valuable than its sell price suggests.</div>
           </div>
@@ -1043,7 +1046,7 @@
               <span class="yield-badge yield-best">PRIMARY</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + swamp areas</span> — damp surfaces, rocks near water. Same route as Mushrooms and Great Mullein.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex + swamp areas</span>damp surfaces, rocks near water. Same route as Mushrooms and Great Mullein.</div>
             </div>
           </div>
         </div>
@@ -1083,7 +1086,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Village area</span> — rocky terrain, highest Prickly Pear density. Pair with Olive farming here.</div>
+              <div class="zone-entry"><span class="zone-name">Village area</span>rocky terrain, highest Prickly Pear density. Pair with Olive farming here.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -1092,7 +1095,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Southern desert zones + rocky ridges</span> — arid terrain throughout southern Buried City.</div>
+              <div class="zone-entry"><span class="zone-name">Southern desert zones + rocky ridges</span>arid terrain throughout southern Buried City.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -1141,7 +1144,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Green valleys + orchards</span> — Blue Gate's flora biome is perfect for Lemons. Highest density of any map.</div>
+              <div class="zone-entry"><span class="zone-name">Green valleys + orchards</span>Blue Gate's flora biome is perfect for Lemons. Highest density of any map.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -1150,7 +1153,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Library + Town Hall gardens</span> — small garden plots.</div>
+              <div class="zone-entry"><span class="zone-name">Library + Town Hall gardens</span>small garden plots.</div>
             </div>
           </div>
         </div>
@@ -1190,7 +1193,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Orchards + green valley areas</span> — same zones as Lemons, good double-dip.</div>
+              <div class="zone-entry"><span class="zone-name">Orchards + green valley areas</span>same zones as Lemons, good double-dip.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -1199,7 +1202,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Southern desert belts + rocky ridges</span> — found alongside Agave in dry zones.</div>
+              <div class="zone-entry"><span class="zone-name">Southern desert belts + rocky ridges</span>found alongside Agave in dry zones.</div>
             </div>
           </div>
           <div class="map-row" data-map="dam">
@@ -1208,7 +1211,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span> — occasional spawns alongside other herbs.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex</span>occasional spawns alongside other herbs.</div>
             </div>
           </div>
         </div>
@@ -1247,7 +1250,7 @@
               <span class="yield-badge yield-best">BEST</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex — Pattern House</span> — dedicated Agave spawns in hydroponic plots.</div>
+              <div class="zone-entry"><span class="zone-name">Hydroponic Dome Complex — Pattern House</span>dedicated Agave spawns in hydroponic plots.</div>
             </div>
           </div>
           <div class="map-row" data-map="buried">
@@ -1256,7 +1259,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Desert zone outskirts</span> — dry terrain throughout.</div>
+              <div class="zone-entry"><span class="zone-name">Desert zone outskirts</span>dry terrain throughout.</div>
             </div>
           </div>
           <div class="map-row" data-map="space">
@@ -1265,7 +1268,7 @@
               <span class="yield-badge yield-good">GOOD</span>
             </div>
             <div class="zone-list">
-              <div class="zone-entry"><span class="zone-name">Outer apron + dusty slopes + east container yards</span> — lower competition, safe pickups while avoiding PvP lanes.</div>
+              <div class="zone-entry"><span class="zone-name">Outer apron + dusty slopes + east container yards</span>lower competition, safe pickups while avoiding PvP lanes.</div>
             </div>
           </div>
         </div>
@@ -1404,7 +1407,7 @@
         <div class="map-rows">
           <div class="map-row" data-map="dam">
             <div class="map-row-header"><span class="map-chip dam">Dam Battlegrounds</span><span class="yield-badge yield-good">GOOD</span></div>
-            <div class="zone-list"><div class="zone-entry"><span class="zone-name">Industrial Zone perimeter</span> — Surveyor patrols. Best risk-to-reward ratio for Circuitry. EM Storm events boost boss ARC spawns here.</div></div>
+            <div class="zone-list"><div class="zone-entry"><span class="zone-name">Industrial Zone perimeter</span>Surveyor patrols. Best risk-to-reward ratio for Circuitry. EM Storm events boost boss ARC spawns here.</div></div>
           </div>
           <div class="map-row" data-map="stella">
             <div class="map-row-header"><span class="map-chip stella">Stella Montis</span><span class="yield-badge yield-best">BEST (HIGH RISK)</span></div>
